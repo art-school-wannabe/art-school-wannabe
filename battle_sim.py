@@ -13,7 +13,7 @@ player_health=28
 number_of_potions=random.randint(0,3)
 
 #mana
-mana=random.randint(3,4)
+mana=random.randint(5,6)
 
 #distance
 distance=1
@@ -185,80 +185,85 @@ while total_fights>0:
     
         #spell selection menu
         if player_action=="3":
-            spell_cast=input("""------------------------
+            if mana>0:
+                spell_cast=input("""------------------------
 1 flame
 2 lightening bolt
 ------------------------""")
 
 
-            #flame
+                #flame
         
-            #player attack
-            if spell_cast=='1':
-                if (random.randint(1,20))>4:
-                    player_attack=(random.randint(4,8))
-                    enemy_health=enemy_health-player_attack
-                    if enemy_health<0:
-                        enemy_health=0
-                    print(f'You cast flame dealing {player_attack} damage. The creature is at {enemy_health} hp.')
-                    if enemy_health==0:
-                        print('The creature died.')
+                #player attack
+                if spell_cast=='1':
+                    mana=mana-1
+                    if (random.randint(1,20))>4:
+                        player_attack=(random.randint(4,8))
+                        enemy_health=enemy_health-player_attack
+                        if enemy_health<0:
+                            enemy_health=0
+                        print(f'You cast flame dealing {player_attack} damage. The creature is at {enemy_health} hp.')
+                        if enemy_health==0:
+                            print('The creature died.')
+                            time.sleep(1)
+                            print(reward)
+                            time.sleep(1)
+                            break
+                        fire_damage()
+                        if enemy_health==0:
+                            print('The creature died.')
+                            time.sleep(1)
+                            print(reward)
+                            time.sleep(1)
+                            break
+                    else:
+                        print('You missed the spell.')
                         time.sleep(1)
-                        print(reward)
-                        time.sleep(1)
-                        break
-                    fire_damage()
-                    if enemy_health==0:
-                        print('The creature died.')
-                        time.sleep(1)
-                        print(reward)
-                        time.sleep(1)
-                        break
-                else:
-                    print('You missed the spell.')
-                    time.sleep(1)
             
-                #enemy attack
-                enemy_action()
-                if player_health==0:
-                    total_fights=0
-                    time.sleep(1)
-                    break
-                continue
-        
-    
-            #lightening bolt
-        
-            #player attack
-            if spell_cast=='2':
-                if (random.randint(1,20))>4:
-                    player_attack=(random.randint(4,8))
-                    enemy_health=enemy_health-player_attack
-                    if enemy_health<0:
-                        enemy_health=0
-                    print(f'You cast lightening bolt dealing {player_attack} damage. The creature is at {enemy_health} hp.')
-                    if enemy_health==0:
-                        print('The creature died.')
-                        time.sleep(1)
-                        print(reward)
-                        time.sleep(1)
-                        break
-                    time.sleep(1)
-                    print('The creature is temporarly paralyzed. It does not attack.')
-                    continue
-                
-            #enemy attack
-                else:
-                    print('You missed the spell.')
-                    time.sleep(1)
+                    #enemy attack
                     enemy_action()
                     if player_health==0:
                         total_fights=0
                         time.sleep(1)
                         break
                     continue
+            
     
-                
+                #lightening bolt
+            
+                #player attack
+                if spell_cast=='2':
+                    mana=mana-1
+                    if (random.randint(1,20))>4:
+                        player_attack=(random.randint(4,8))
+                        enemy_health=enemy_health-player_attack
+                        if enemy_health<0:
+                            enemy_health=0
+                        print(f'You cast lightening bolt dealing {player_attack} damage. The creature is at {enemy_health} hp.')
+                        if enemy_health==0:
+                            print('The creature died.')
+                            time.sleep(1)
+                            print(reward)
+                            time.sleep(1)
+                            break
+                        time.sleep(1)
+                        print('The creature is temporarly paralyzed. It does not attack.')
+                        continue
+                    
+                #enemy attack
+                    else:
+                        print('You missed the spell.')
+                        time.sleep(1)
+                        enemy_action()
+                        if player_health==0:
+                            total_fights=0
+                            time.sleep(1)
+                            break
+                        continue
+            else:
+                print('You are out of mana.')
+                continue
+
         #health potion
         if  player_action=="4":
             if number_of_potions>=0:
@@ -293,7 +298,7 @@ while total_fights>0:
                     time.sleep(1)
                     continue
     
-               
+
             #step backward
             if move_action=='2':
                 if distance==1:
