@@ -1,30 +1,31 @@
 
-#import modules
+# import modules
 import random
 import time 
 
 
-#set variables
+# set variables
 
-#player health 
+# player health 
 player_health=28
 
-#number of health potions
+# number of health potions
 number_of_potions=random.randint(0,3)
 
-#mana
+# mana
 mana=random.randint(5,6)
 
-#distance
+# distance
 distance=1
 
-#inventory
+# inventory
 total_experience=0
 total_gold=0
 
-#define functions
-        
-#fire damage
+
+# define functions
+
+# fire damage function
 def fire_damage():
     global enemy_health
     
@@ -36,19 +37,19 @@ def fire_damage():
     time.sleep(1)
 
 
-#repeat
+# fight repeat
 total_fights=1
 while total_fights>0:
 
-    #enemy health
+    # enemy health
     enemy_health=random.randint(26,42)
-    #enemy size for the intro text
+    # enemy size for the intro text
     if enemy_health>28:
         enemy_size='large'
     else:
         enemy_size='small'
 
-    #enemy attack function
+    # enemy attack function
     def enemy_action():
         global player_health
         global distance
@@ -70,16 +71,15 @@ while total_fights>0:
             print('The creature missed the attack.')
             time.sleep(1)
 
-    #reward 
+    # reward variables 
     experience=(enemy_health*40)
     gold=random.randint(3,16)
     item_list=['a tattered pelt', 'three arrows', 'a broken arrow']
     item_reward=(random.choice(item_list))
     reward=(f'{gold} gold, {item_reward}, and {experience} experience')
-        
-    #alerts
 
-    #opening alert 
+
+    # opening alert 
     print(f'a {enemy_size} creature has approached you. It appears hostile.')
     time.sleep(1)
     print("""------------------------
@@ -92,14 +92,14 @@ while total_fights>0:
     time.sleep(1)
 
 
-    #repeat
+    # round repeat
     while 1>0:
 
-        #selection menu
+        # action selection menu
         player_action=input('What do you do next?')
     
     
-        #controls info pannel
+        # controls info pannel (0)
         if player_action=="0":
             print("""------------------------
 1 attack with sword
@@ -112,9 +112,9 @@ while total_fights>0:
             continue
     
     
-        #attack with sword
+        # attack with sword (1)
     
-        #player attack
+        # player attack
         if player_action=="1":
             if distance==1:
                 if random.randint(1,20)>4:
@@ -138,7 +138,7 @@ while total_fights>0:
                 time.sleep(1)
                 continue
 
-            #enemy attack
+            # enemy attack
             enemy_action()
             if player_health==0:
                 total_fights=0
@@ -147,9 +147,9 @@ while total_fights>0:
             continue
 
 
-        #attack with crossbow
+        # attack with crossbow (2)
     
-        #player attack
+        # player attack
         if player_action=="2":
             if distance==1:
                 attack_chance=(random.randint(1,20))
@@ -172,7 +172,7 @@ while total_fights>0:
                 print('You missed the attack.')
                 time.sleep(1)
 
-            #enemy attack
+            # enemy attack
             enemy_action()
             if player_health==0:
                 total_fights=0
@@ -181,9 +181,9 @@ while total_fights>0:
             continue
     
     
-        #cast a spell
+        # cast a spell (3)
     
-        #spell selection menu
+        # spell selection menu
         if player_action=="3":
             if mana>0:
                 spell_cast=input("""------------------------
@@ -192,9 +192,9 @@ while total_fights>0:
 ------------------------""")
 
 
-                #flame
+                # flame spell
         
-                #player attack
+                # player attack
                 if spell_cast=='1':
                     mana=mana-1
                     if (random.randint(1,20))>4:
@@ -219,8 +219,8 @@ while total_fights>0:
                     else:
                         print('You missed the spell.')
                         time.sleep(1)
-            
-                    #enemy attack
+
+                    # enemy attack
                     enemy_action()
                     if player_health==0:
                         total_fights=0
@@ -229,9 +229,9 @@ while total_fights>0:
                     continue
             
     
-                #lightening bolt
-            
-                #player attack
+                # lightening bolt spell
+
+                # player attack
                 if spell_cast=='2':
                     mana=mana-1
                     if (random.randint(1,20))>4:
@@ -250,7 +250,7 @@ while total_fights>0:
                         print('The creature is temporarly paralyzed. It does not attack.')
                         continue
                     
-                #enemy attack
+                # enemy attack
                     else:
                         print('You missed the spell.')
                         time.sleep(1)
@@ -264,7 +264,7 @@ while total_fights>0:
                 print('You are out of mana.')
                 continue
 
-        #health potion
+        # health potion (4)
         if  player_action=="4":
             if number_of_potions>=0:
                 health_from_potion=(random.randint(1,6))
@@ -277,7 +277,7 @@ while total_fights>0:
                 continue
         
     
-        #move
+        # move (5)
         if player_action=='5':
             move_action=input("""------------------------
 1 step forward
@@ -286,7 +286,7 @@ while total_fights>0:
 ------------------------""")
 
 
-            #step forward
+            # step forward
             if move_action=='1':
                 if distance==1:
                     print('You cant step any closer to the creature.')
@@ -299,7 +299,7 @@ while total_fights>0:
                     continue
     
 
-            #step backward
+            # step backward
             if move_action=='2':
                 if distance==1:
                     distance=distance+1
@@ -317,18 +317,20 @@ while total_fights>0:
                         continue
 
 
-            #run away 
+            # run away 
             if move_action=='3':
                 print('You ran away.')
                 time.sleep(1)
                 break
 
+    
+    # repeat request selection
     if total_fights>0:
         repeat_option=input('Do you want to fight again? (Y or N)')
-        if repeat_option==('Y'):
+        if repeat_option==('Y') or ('y'):
             total_fights=total_fights+1
             continue
-        if repeat_option==('N'):
+        if repeat_option==('N') or ('n'):
             break
     else:
         break
