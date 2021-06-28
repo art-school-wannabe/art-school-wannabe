@@ -7,7 +7,7 @@ import time
 # set variables
 
 # player health 
-player_health=28
+player_health=48
 
 # number of health potions
 number_of_potions=random.randint(0,3)
@@ -41,13 +41,66 @@ def fire_damage():
 total_fights=1
 while total_fights>0:
 
-    # enemy health
-    enemy_health=random.randint(26,42)
-    # enemy size for the intro text
-    if enemy_health>28:
-        enemy_size='large'
+    
+    #bounty board 
+    
+    # creature a 
+    creaturea_health=random.randint(26,42)
+    if creaturea_health>34:
+        creaturea_size='small'
     else:
-        enemy_size='small'
+        creaturea_size='large'
+    creaturea_experience=(creaturea_health*40)
+    creaturea_gold=random.randint(20,40)
+    
+    # creature b
+    creatureb_health=random.randint(26,42)
+    if creatureb_health>34:
+        creatureb_size='small'
+    else:
+        creatureb_size='large'
+    creatureb_experience=(creatureb_health*40)
+    creatureb_gold=random.randint(20,40)
+    
+    # creature c 
+    creaturec_health=random.randint(26,42)
+    if creaturec_health>34:
+        creaturec_size='small'
+    else:
+        creaturec_size='large'
+    creaturec_experience=(creaturec_health*40)
+    creaturec_gold=random.randint(20,40)
+    
+    #bounty board selection menu
+    print(f""" 
+ ______________    ______________    ______________
+|  Creature A  |  |  Creature B  |  |  Creature C  |
+|  size: {creaturea_size} |  |  size: {creatureb_size} |  |  size: {creaturec_size} |
+|  exp: {creaturea_experience}   |  |  exp: {creatureb_experience}   |  |  exp: {creaturec_experience}   |
+|    Reward    |  |    Reward    |  |    Reward    |
+|   {creaturea_gold}  gold   |  |   {creatureb_gold}  gold   |  |   {creaturec_gold}  gold   |
+ ______________    ______________    ______________ """)
+    time.sleep(1)
+    enemy_selection=input('Choose a bounty.')
+
+    if enemy_selection==('a'):
+        enemy_health=creaturea_health
+        enemy_size=creaturea_size
+        experience=creaturea_experience
+        gold=creaturea_gold
+    
+    if enemy_selection==('b'):
+        enemy_health=creatureb_health
+        enemy_size=creatureb_size
+        experience=creatureb_experience
+        gold=creatureb_gold
+    
+    if enemy_selection==('c'):
+        enemy_health=creaturec_health
+        enemy_size=creaturec_size
+        experience=creaturec_experience
+        gold=creaturec_gold
+
 
     # enemy attack function
     def enemy_action():
@@ -72,8 +125,6 @@ while total_fights>0:
             time.sleep(1)
 
     # reward variables 
-    experience=(enemy_health*40)
-    gold=random.randint(3,16)
     item_list=['a tattered pelt', 'three arrows', 'a broken arrow']
     item_reward=(random.choice(item_list))
     reward=(f'{gold} gold, {item_reward}, and {experience} experience')
