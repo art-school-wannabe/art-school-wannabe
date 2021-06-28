@@ -18,6 +18,10 @@ mana=random.randint(3,4)
 #distance
 distance=1
 
+#inventory
+total_experience=0
+total_gold=0
+
 #define functions
         
 #fire damage
@@ -34,7 +38,7 @@ def fire_damage():
 
 #repeat
 total_fights=1
-while 1>0:
+while total_fights>0:
 
     #enemy health
     enemy_health=random.randint(26,42)
@@ -52,7 +56,7 @@ while 1>0:
         if distance==1:
             attack_chance=(random.randint(1,20))
         else:
-            attack_chance=(random.randint(1,16))
+            attack_chance=(random.randint(1,10))
         if attack_chance>8:
             enemy_attack=(random.randint(4,8))
             player_health=(player_health-enemy_attack)
@@ -113,7 +117,7 @@ while 1>0:
         #player attack
         if player_action=="1":
             if distance==1:
-                if random.randint(1,20)>6:
+                if random.randint(1,20)>4:
                     player_attack=(random.randint(4,8))
                     enemy_health=(enemy_health-player_attack)
                     if enemy_health<0:
@@ -150,8 +154,8 @@ while 1>0:
             if distance==1:
                 attack_chance=(random.randint(1,20))
             else:
-                attack_chance=(random.randint(1,16))
-            if attack_chance>8:
+                attack_chance=(random.randint(1,8))
+            if attack_chance>4:
                 player_attack=(random.randint(4,8))
                 enemy_health=(enemy_health-player_attack)
                 if enemy_health<0:
@@ -191,7 +195,7 @@ while 1>0:
         
             #player attack
             if spell_cast=='1':
-                if (random.randint(1,20))>8:
+                if (random.randint(1,20))>4:
                     player_attack=(random.randint(4,8))
                     enemy_health=enemy_health-player_attack
                     if enemy_health<0:
@@ -227,7 +231,7 @@ while 1>0:
         
             #player attack
             if spell_cast=='2':
-                if (random.randint(1,20))>8:
+                if (random.randint(1,20))>4:
                     player_attack=(random.randint(4,8))
                     enemy_health=enemy_health-player_attack
                     if enemy_health<0:
@@ -302,3 +306,24 @@ while 1>0:
                     if move_action=='Y':
                         print('You ran away.')
                         time.sleep(1)
+                        break
+                    else:
+                        time.sleep(1)
+                        continue
+
+
+            #run away 
+            if move_action=='3':
+                print('You ran away.')
+                time.sleep(1)
+                break
+
+    if total_fights>0:
+        repeat_option=input('Do you want to fight again? (Y or N)')
+        if repeat_option==('Y'):
+            total_fights=total_fights+1
+            continue
+        if repeat_option==('N'):
+            break
+    else:
+        break
