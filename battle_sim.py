@@ -395,10 +395,10 @@ while total_fights>0:
     repeat_option=input('Do you want to fight again? (Y or N)')
     
     # end game
-    if repeat_option==('N') or ('n'):
+    if repeat_option==('N'):
         exit()
 
     # repeat fight
-    if repeat_option==('Y') or ('y'):
+    if repeat_option==('Y'):
         total_fights=total_fights+1
         continue
