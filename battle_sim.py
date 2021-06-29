@@ -18,8 +18,9 @@ distance=1
 # inventory
 total_experience=0
 total_gold=0
-number_of_potions=random.randint(0,3)
-number_of_arrows=random.randint(12,16)
+total_health_potions=random.randint(0,3)
+total_mana_potions=random.randint(0,3)
+total_arrows=random.randint(12,16)
 
 
 # define functions
@@ -58,7 +59,7 @@ while total_fights>0:
 
         # creature a 
         creaturea_health=random.randint(26,42)
-        if creaturea_health>34:
+        if creaturea_health<34:
             creaturea_size='small'
         else:
             creaturea_size='large'
@@ -67,7 +68,7 @@ while total_fights>0:
     
         # creature b
         creatureb_health=random.randint(26,42)
-        if creatureb_health>34:
+        if creatureb_health<34:
             creatureb_size='small'
         else:
             creatureb_size='large'
@@ -76,7 +77,7 @@ while total_fights>0:
     
         # creature c 
         creaturec_health=random.randint(26,42)
-        if creaturec_health>34:
+        if creaturec_health<34:
             creaturec_size='small'
         else:
             creaturec_size='large'
@@ -135,15 +136,9 @@ while total_fights>0:
                 print('The creature missed the attack.')
                 time.sleep(1)
 
-        # reward variables 
-        reward_arrows=random.randint(6,8)
-        reward_potions=random.randint(0,2)
-        item_list=['a tattered pelt', 'a broken arrow']
-        item_reward=(random.choice(item_list))
-
         # reward function
         def reward():
-            global mana, gold, number_of_potions, number_of_arrows, experience, total_gold, total_experience
+            global mana, gold, total_health_potions, total_arrows, experience, total_gold, total_experience
 
             # reward variables 
             reward_arrows=random.randint(6,8)
@@ -154,8 +149,8 @@ while total_fights>0:
             #reward alert and inventory update
             print(f'{gold} gold, {reward_arrows} arrows, {reward_potions} health potions, {item_reward}, and {experience} experience')
             mana=mana+2
-            number_of_potions=(number_of_potions+reward_potions)
-            number_of_arrows=(number_of_arrows+reward_arrows)
+            total_health_potions=(total_health_potions+reward_potions)
+            total_arrows=(total_arrows+reward_arrows)
             total_gold=total_gold+gold
             total_experience=total_experience+experience
 
@@ -166,7 +161,7 @@ while total_fights>0:
 1 attack with sword
 2 attack with crossbow
 3 cast a spell
-4 use a health potion
+4 check inventory
 5 move
 ------------------------""")
         time.sleep(1)
@@ -185,7 +180,7 @@ while total_fights>0:
 1 attack with sword
 2 attack with crossbow
 3 cast a spell
-4 use a health potion
+4 check inventory
 5 move
 ------------------------""")
                 time.sleep(1)
@@ -230,8 +225,8 @@ while total_fights>0:
 
             # player attack
             if player_action=="2":
-                if number_of_arrows>0:
-                    number_of_arrows-1
+                if total_arrows>0:
+                    total_arrows-1
                     if distance==1:
                         attack_chance=(random.randint(1,20))
                     else:
@@ -344,17 +339,30 @@ while total_fights>0:
                     print('You are out of mana.')
                     continue
 
-            # health potion (4)
-            if  player_action=="4":
-                if number_of_potions>=0:
-                    health_from_potion=(random.randint(1,6))
-                    player_health=player_health+health_from_potion
-                    print(f'You took a health potion. You recovered {health_from_potion} hp. You are at {player_health} hp. You have {number_of_potions} potions left.')
-                    number_of_potions=number_of_potions-1
-                    continue
-                else:
-                    print('You are out of health potions.')
-                    continue
+
+            # check inventory (4)
+            if player_action=='4':
+                inventory_action=input(f"""------------------------------
+1) potion of health       {total_health_potions}
+2)   potion of mana       {total_mana_potions}
+3)           arrows       {total_arrows}
+4)             gold       {total_gold}
+
+   {mana} mana   {total_experience} experience
+------------------------------
+         (0) exit""")
+
+                # use health potion 
+                if  inventory_action=='1':
+                    if total_health_potions>0:
+                        health_from_potion=(random.randint(1,6))
+                        player_health=player_health+health_from_potion
+                        total_health_potions=total_health_potions-1
+                        print(f'You took a potion of health. You recovered {health_from_potion} hp. You are at {player_health} hp. You have {total_health_potions} potions left.')
+                        continue
+                    else:
+                        print('You are out of health potions.')
+                        continue
     
     
             # move (5)
@@ -423,8 +431,8 @@ while total_fights>0:
 
             if purchase==('1'):
                 if total_gold>=50:
-                    total_gold-50
-                    number_of_potions+1
+                    total_gold=total_gold-50
+                    total_health_potions=total_health_potions+1
                     print('you purchased a health potion')
                     time.sleep(1)
                     continue
@@ -438,8 +446,8 @@ while total_fights>0:
                 time.sleep(1)
                 continue
                 #if total_gold>=30:
-                    #total_gold-30
-                    #number_of_potions+1
+                    #total_gold=total_gold-30
+                    #total_mana_potions=total_mana_potions+1
                     #print('you purchased a potion of mana')
                     #time.sleep(1)
                     #continue
@@ -450,8 +458,8 @@ while total_fights>0:
 
             if purchase==('3'):
                 if total_gold>=10:
-                    total_gold-10
-                    number_of_arrows+4
+                    total_gold=total_gold-10
+                    total_arrows=total_arrows+4
                     print('you purchased a health potion')
                     time.sleep(1)
                     continue
