@@ -64,7 +64,7 @@ while total_fights>0:
         else:
             creaturea_size='large'
         creaturea_experience=(creaturea_health*40)
-        creaturea_gold=random.randint(20,40)
+        creaturea_gold=creaturea_health*2
     
         # creature b
         creatureb_health=random.randint(26,42)
@@ -73,7 +73,7 @@ while total_fights>0:
         else:
             creatureb_size='large'
         creatureb_experience=(creatureb_health*40)
-        creatureb_gold=random.randint(20,40)
+        creatureb_gold=creatureb_health*2
     
         # creature c 
         creaturec_health=random.randint(26,42)
@@ -82,7 +82,7 @@ while total_fights>0:
         else:
             creaturec_size='large'
         creaturec_experience=(creaturec_health*40)
-        creaturec_gold=random.randint(20,40)
+        creaturec_gold=creaturec_health*2
     
         # bounty board selection menu
         print(f""" ______________    ______________    ______________
@@ -352,6 +352,7 @@ while total_fights>0:
 ------------------------------
          (0) exit""")
 
+                # inventory repeat
                 while 1>0:
                     inventory_action=input('')
                     
@@ -440,14 +441,17 @@ while total_fights>0:
     if tavern_action==('3'):
         print('Smiley offers a few small items for sale')
         time.sleep(1)
-        while 1>0:
-            purchase=input("""------------------------------
+        print("""------------------------------
 1 potion of health   50 gold
 2 potion of mana     30 gold
 3 arrows (4 count)   10 gold
-     4 finish shopping
+     4 check inventory
+     5 finish shopping
 ------------------------------""")
+        while 1>0:
+            purchase=input('')
 
+            # buy health potion 
             if purchase==('1'):
                 if total_gold>=50:
                     total_gold=total_gold-50
@@ -459,7 +463,8 @@ while total_fights>0:
                     print('you do not have enough gold')
                     time.sleep(1)
                     continue
-                
+
+            # buy mana potion
             if purchase==('2'):
                 if total_gold>=30:
                     total_gold=total_gold-30
@@ -472,6 +477,7 @@ while total_fights>0:
                     time.sleep(1)
                     continue
 
+            # buy arrows
             if purchase==('3'):
                 if total_gold>=10:
                     total_gold=total_gold-10
@@ -484,7 +490,19 @@ while total_fights>0:
                     time.sleep(1)
                     continue
 
+            # check inventory
             if purchase==('4'):
+                print(f"""------------------------------
+1) potion of health       {total_health_potions}
+2)   potion of mana       {total_mana_potions}
+3)           arrows       {total_arrows}
+4)             gold       {total_gold}
+
+   {mana} mana   {total_experience} experience
+------------------------------""")
+
+            # exit shop
+            if purchase==('5'):
                 print('Smiley puts the items back under the bar')
                 time.sleep(1)
                 break
