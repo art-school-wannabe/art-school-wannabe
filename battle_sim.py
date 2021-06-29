@@ -208,9 +208,8 @@ while total_fights>0:
             # enemy attack
             enemy_action()
             if player_health==0:
-                total_fights=0
                 time.sleep(1)
-                break
+                exit()
             continue
 
 
@@ -218,41 +217,46 @@ while total_fights>0:
     
         # player attack
         if player_action=="2":
-            if distance==1:
-                attack_chance=(random.randint(1,20))
-            else:
-                attack_chance=(random.randint(1,8))
-            if attack_chance>4:
-                player_attack=(random.randint(4,8))
-                enemy_health=(enemy_health-player_attack)
-                if enemy_health<0:
-                    enemy_health=0
-                print(f'You shot the creature with your crossbow doing {player_attack} damage. The creature is at {enemy_health} hp.')
-                time.sleep(1)
-                if enemy_health==0:
-                    print('The creature died.')
+            if number_of_arrows>0:
+                number_of_arrows-1
+                if distance==1:
+                    attack_chance=(random.randint(1,20))
+                else:
+                    attack_chance=(random.randint(1,8))
+                if attack_chance>4:
+                    player_attack=(random.randint(4,8))
+                    enemy_health=(enemy_health-player_attack)
+                    if enemy_health<0:
+                        enemy_health=0
+                    print(f'You shot the creature with your crossbow doing {player_attack} damage. The creature is at {enemy_health} hp.')
                     time.sleep(1)
-                    reward()
+                    if enemy_health==0:
+                        print('The creature died.')
+                        time.sleep(1)
+                        reward()
+                        time.sleep(1)
+                        break
+                else:
+                    print('You missed the attack.')
                     time.sleep(1)
-                    break
-            else:
-                print('You missed the attack.')
-                time.sleep(1)
 
-            # enemy attack
-            enemy_action()
-            if player_health==0:
-                total_fights=0
-                time.sleep(1)
-                break
-            continue
-    
+                # enemy attack
+                enemy_action()
+                if player_health==0:
+                    time.sleep(1)
+                    exit()
+                continue
+            
+            else:
+                print('you are out of arrows')
+
     
         # cast a spell (3)
     
         # spell selection menu
         if player_action=="3":
             if mana>0:
+                mana=mana-1
                 spell_cast=input("""------------------------
 1 flame
 2 lightening bolt
@@ -263,7 +267,6 @@ while total_fights>0:
         
                 # player attack
                 if spell_cast=='1':
-                    mana=mana-1
                     if (random.randint(1,20))>4:
                         player_attack=(random.randint(4,8))
                         enemy_health=enemy_health-player_attack
@@ -290,9 +293,8 @@ while total_fights>0:
                     # enemy attack
                     enemy_action()
                     if player_health==0:
-                        total_fights=0
                         time.sleep(1)
-                        break
+                        exit()
                     continue
             
     
@@ -300,7 +302,6 @@ while total_fights>0:
 
                 # player attack
                 if spell_cast=='2':
-                    mana=mana-1
                     if (random.randint(1,20))>4:
                         player_attack=(random.randint(4,8))
                         enemy_health=enemy_health-player_attack
@@ -323,9 +324,8 @@ while total_fights>0:
                         time.sleep(1)
                         enemy_action()
                         if player_health==0:
-                            total_fights=0
                             time.sleep(1)
-                            break
+                            exit()
                         continue
             else:
                 print('You are out of mana.')
@@ -392,13 +392,13 @@ while total_fights>0:
 
     
     # repeat request selection
-    if total_fights>0:
-        repeat_option=input('Do you want to fight again? (Y or N)')
-        if repeat_option==('Y') or ('y'):
-            total_fights=total_fights+1
-            continue
-        if repeat_option==('N') or ('n'):
-            total_fights=0
-            break
-    else:
-        break
+    repeat_option=input('Do you want to fight again? (Y or N)')
+    
+    # end game
+    if repeat_option==('N') or ('n'):
+        exit()
+
+    # repeat fight
+    if repeat_option==('Y') or ('y'):
+        total_fights=total_fights+1
+        continue
