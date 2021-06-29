@@ -48,6 +48,7 @@ while total_fights>0:
 1 take a bounty 
 2 grab a drink
 3 buy items
+4 leave the tavern 
 -----------------""")
     
     # bounty board 
@@ -401,14 +402,12 @@ while total_fights>0:
                     break
 
     
-        # repeat request selection
-        repeat_option=input('would you like to return to the tavern? (y or n)')
+        #game repeat
+        total_fights=total_fights+1
+        continue
 
-        # end game
-        if repeat_option==('n'):
-            exit()
-
-        # repeat fight
-        if repeat_option==('y'):
-            total_fights=total_fights+1
-            continue
+    # leave the tavern 
+    if tavern_action==('4'):
+        print('you step out of the tavern and take a deep breathe of fresh air after a long days work')
+        time.sleep(1)
+        exit()
