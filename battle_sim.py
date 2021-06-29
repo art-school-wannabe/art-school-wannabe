@@ -10,14 +10,14 @@ import time
 player_health=48
 
 # mana
-mana=random.randint(5,6)
+mana=100
 
 # distance
 distance=1
 
 # inventory
 total_experience=0
-total_gold=0
+total_gold=80
 total_health_potions=random.randint(0,3)
 total_mana_potions=random.randint(0,3)
 total_arrows=random.randint(12,16)
@@ -123,7 +123,7 @@ while total_fights>0:
                 attack_chance=(random.randint(1,20))
             else:
                 attack_chance=(random.randint(1,10))
-            if attack_chance>8:
+            if attack_chance>4:
                 enemy_attack=(random.randint(4,8))
                 player_health=(player_health-enemy_attack)
                 if player_health<0:
@@ -153,6 +153,8 @@ while total_fights>0:
             total_arrows=(total_arrows+reward_arrows)
             total_gold=total_gold+gold
             total_experience=total_experience+experience
+            time.sleep(1)
+            print('you return to the tavern')
 
         # opening alert 
         print(f'a {enemy_size} creature has approached you. It appears hostile.')
@@ -226,7 +228,7 @@ while total_fights>0:
             # player attack
             if player_action=="2":
                 if total_arrows>0:
-                    total_arrows-1
+                    total_arrows=total_arrows-1
                     if distance==1:
                         attack_chance=(random.randint(1,20))
                     else:
@@ -264,10 +266,11 @@ while total_fights>0:
             # spell selection menu
             if player_action=="3":
                 if mana>0:
-                    mana=mana-1
-                    spell_cast=input("""------------------------
-1 flame
-2 lightening bolt
+                    spell_cast=input(f"""------------------------
+mp                  {mana}
+------------------------
+1 flame             10
+2 lightening bolt   20
 ------------------------""")
 
 
@@ -275,6 +278,7 @@ while total_fights>0:
     
                     # player attack
                     if spell_cast=='1':
+                        mana=mana-10
                         if (random.randint(1,20))>4:
                             player_attack=(random.randint(4,8))
                             enemy_health=enemy_health-player_attack
@@ -310,6 +314,7 @@ while total_fights>0:
 
                     # player attack
                     if spell_cast=='2':
+                        mana=mana-20
                         if (random.randint(1,20))>4:
                             player_attack=(random.randint(4,8))
                             enemy_health=enemy_health-player_attack
@@ -375,10 +380,9 @@ while total_fights>0:
                     # use mana potion  
                     if inventory_action=='2':
                         if total_mana_potions>0:
-                            mana_from_potion=(random.randint(1,6))
-                            mana=mana+mana_from_potion
+                            mana=mana+20
                             total_mana_potions=total_mana_potions-1
-                            print(f'You took a potion of mana. You recovered {mana_from_potion} mp. You are at {mana} hp. You have {total_mana_potions} potions left.')
+                            print(f'You took a potion of mana. You recovered 20 mp. You are at {mana} hp. You have {total_mana_potions} potions left.')
                             continue
                         else:
                             print('You are out of health potions.')
@@ -441,13 +445,15 @@ while total_fights>0:
     if tavern_action==('3'):
         print('Smiley offers a few small items for sale')
         time.sleep(1)
-        print("""------------------------------
+        print(f"""------------------------------
+you have             {total_gold} gold
+------------------------------
 1 potion of health   50 gold
 2 potion of mana     30 gold
 3 arrows (4 count)   10 gold
      4 check inventory
-     5 finish shopping
-------------------------------""")
+------------------------------
+     5 finish shopping""")
         while 1>0:
             purchase=input('')
 
@@ -482,7 +488,7 @@ while total_fights>0:
                 if total_gold>=10:
                     total_gold=total_gold-10
                     total_arrows=total_arrows+4
-                    print('you purchased a health potion')
+                    print('you purchased a bundle of arrows')
                     time.sleep(1)
                     continue
                 else:
