@@ -10,7 +10,7 @@ import time
 player_health=48
 
 # mana
-mana=random.randint(2,3)
+mana=random.randint(5,6)
 
 # distance
 distance=1
@@ -36,13 +36,14 @@ def fire_damage():
     time.sleep(1)
 
 
+# game start
+print('you step into the tavern')
+time.sleep(1)
+
 # fight repeat
 total_fights=1
 while total_fights>0:
 
-    # tavern opening alert
-    print('you step into the tavern')
-    time.sleep(1)
     # tavern selection menu
     tavern_action=input("""-----------------
 1 take a bounty 
@@ -50,8 +51,9 @@ while total_fights>0:
 3 buy items
 4 leave the tavern 
 -----------------""")
+
     
-    # bounty board 
+    # 1 bounty board 
     if tavern_action==('1'):
 
         # creature a 
@@ -406,7 +408,64 @@ while total_fights>0:
         total_fights=total_fights+1
         continue
 
-    # leave the tavern 
+
+    # 3 shop 
+    if tavern_action==('3'):
+        print('Smiley offers a few small items for sale')
+        time.sleep(1)
+        while 1>0:
+            purchase=input("""------------------------------
+1 potion of health   50 gold
+2 potion of mana     30 gold
+3 arrows (4 count)   10 gold
+     4 finish shopping
+------------------------------""")
+
+            if purchase==('1'):
+                if total_gold>=50:
+                    total_gold-50
+                    number_of_potions+1
+                    print('you purchased a health potion')
+                    time.sleep(1)
+                    continue
+                else:
+                    print('you do not have enough gold')
+                    time.sleep(1)
+                    continue
+                
+            if purchase==('2'):
+                print('this item is out of stock')
+                time.sleep(1)
+                continue
+                #if total_gold>=30:
+                    #total_gold-30
+                    #number_of_potions+1
+                    #print('you purchased a potion of mana')
+                    #time.sleep(1)
+                    #continue
+                #else:
+                    #print('you do not have enough gold')
+                    #time.sleep(1)
+                    #continue
+
+            if purchase==('3'):
+                if total_gold>=10:
+                    total_gold-10
+                    number_of_arrows+4
+                    print('you purchased a health potion')
+                    time.sleep(1)
+                    continue
+                else:
+                    print('you do not have enough gold')
+                    time.sleep(1)
+                    continue
+
+            if purchase==('4'):
+                print('Smiley puts the items back under the bar')
+                time.sleep(1)
+                break
+
+    # 4 leave the tavern
     if tavern_action==('4'):
         print('you step out of the tavern and take a deep breathe of fresh air after a long days work')
         time.sleep(1)
