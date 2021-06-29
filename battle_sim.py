@@ -9,11 +9,8 @@ import time
 # player health 
 player_health=48
 
-# number of health potions
-number_of_potions=random.randint(0,3)
-
 # mana
-mana=random.randint(5,6)
+mana=random.randint(2,3)
 
 # distance
 distance=1
@@ -21,6 +18,8 @@ distance=1
 # inventory
 total_experience=0
 total_gold=0
+number_of_potions=random.randint(0,3)
+number_of_arrows=random.randint(12,16)
 
 
 # define functions
@@ -72,8 +71,7 @@ while total_fights>0:
     creaturec_gold=random.randint(20,40)
     
     #bounty board selection menu
-    print(f""" 
- ______________    ______________    ______________
+    print(f""" ______________    ______________    ______________
 |  Creature A  |  |  Creature B  |  |  Creature C  |
 |  size: {creaturea_size} |  |  size: {creatureb_size} |  |  size: {creaturec_size} |
 |  exp: {creaturea_experience}   |  |  exp: {creatureb_experience}   |  |  exp: {creaturec_experience}   |
@@ -83,19 +81,19 @@ while total_fights>0:
     time.sleep(1)
     enemy_selection=input('Choose a bounty.')
 
-    if enemy_selection==('a'):
+    if enemy_selection==('a') or ('A'):
         enemy_health=creaturea_health
         enemy_size=creaturea_size
         experience=creaturea_experience
         gold=creaturea_gold
     
-    if enemy_selection==('b'):
+    if enemy_selection==('b') or ('B'):
         enemy_health=creatureb_health
         enemy_size=creatureb_size
         experience=creatureb_experience
         gold=creatureb_gold
     
-    if enemy_selection==('c'):
+    if enemy_selection==('c') or ('C'):
         enemy_health=creaturec_health
         enemy_size=creaturec_size
         experience=creaturec_experience
@@ -125,10 +123,28 @@ while total_fights>0:
             time.sleep(1)
 
     # reward variables 
-    item_list=['a tattered pelt', 'three arrows', 'a broken arrow']
+    reward_arrows=random.randint(6,8)
+    reward_potions=random.randint(0,2)
+    item_list=['a tattered pelt', 'a broken arrow']
     item_reward=(random.choice(item_list))
-    reward=(f'{gold} gold, {item_reward}, and {experience} experience')
 
+    # reward function
+    def reward():
+        global mana, gold, number_of_potions, number_of_arrows, experience, total_gold, total_experience
+        
+        # reward variables 
+        reward_arrows=random.randint(6,8)
+        reward_potions=random.randint(0,2)
+        item_list=['a tattered pelt', 'a broken arrow']
+        item_reward=(random.choice(item_list))
+        
+        #reward alert and inventory update
+        print(f'{gold} gold, {reward_arrows} arrows, {reward_potions} health potions, {item_reward}, and {experience} experience')
+        mana=mana+2
+        number_of_potions=(number_of_potions+reward_potions)
+        number_of_arrows=(number_of_arrows+reward_arrows)
+        total_gold=total_gold+gold
+        total_experience=total_experience+experience
 
     # opening alert 
     print(f'a {enemy_size} creature has approached you. It appears hostile.')
@@ -178,7 +194,7 @@ while total_fights>0:
                     if enemy_health==0:
                         print('The creature died.')
                         time.sleep(1)
-                        print(reward)
+                        reward()
                         time.sleep(1)
                         break
                 else:
@@ -216,7 +232,7 @@ while total_fights>0:
                 if enemy_health==0:
                     print('The creature died.')
                     time.sleep(1)
-                    print(reward)
+                    reward()
                     time.sleep(1)
                     break
             else:
@@ -257,14 +273,14 @@ while total_fights>0:
                         if enemy_health==0:
                             print('The creature died.')
                             time.sleep(1)
-                            print(reward)
+                            reward()
                             time.sleep(1)
                             break
                         fire_damage()
                         if enemy_health==0:
                             print('The creature died.')
                             time.sleep(1)
-                            print(reward)
+                            reward()
                             time.sleep(1)
                             break
                     else:
@@ -294,7 +310,7 @@ while total_fights>0:
                         if enemy_health==0:
                             print('The creature died.')
                             time.sleep(1)
-                            print(reward)
+                            rewrad()
                             time.sleep(1)
                             break
                         time.sleep(1)
@@ -382,6 +398,7 @@ while total_fights>0:
             total_fights=total_fights+1
             continue
         if repeat_option==('N') or ('n'):
+            total_fights=0
             break
     else:
         break
