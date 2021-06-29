@@ -342,7 +342,7 @@ while total_fights>0:
 
             # check inventory (4)
             if player_action=='4':
-                inventory_action=input(f"""------------------------------
+                print(f"""------------------------------
 1) potion of health       {total_health_potions}
 2)   potion of mana       {total_mana_potions}
 3)           arrows       {total_arrows}
@@ -352,18 +352,37 @@ while total_fights>0:
 ------------------------------
          (0) exit""")
 
-                # use health potion 
-                if  inventory_action=='1':
-                    if total_health_potions>0:
-                        health_from_potion=(random.randint(1,6))
-                        player_health=player_health+health_from_potion
-                        total_health_potions=total_health_potions-1
-                        print(f'You took a potion of health. You recovered {health_from_potion} hp. You are at {player_health} hp. You have {total_health_potions} potions left.')
-                        continue
-                    else:
-                        print('You are out of health potions.')
-                        continue
-    
+                while 1>0:
+                    inventory_action=input('')
+                    
+                    # exit inventory
+                    if inventory_action=='0':
+                        break
+                    
+                    # use health potion 
+                    if  inventory_action=='1':
+                        if total_health_potions>0:
+                            health_from_potion=(random.randint(1,6))
+                            player_health=player_health+health_from_potion
+                            total_health_potions=total_health_potions-1
+                            print(f'You took a potion of health. You recovered {health_from_potion} hp. You are at {player_health} hp. You have {total_health_potions} potions left.')
+                            continue
+                        else:
+                            print('You are out of health potions.')
+                            continue
+                        
+                    # use mana potion  
+                    if inventory_action=='2':
+                        if total_mana_potions>0:
+                            mana_from_potion=(random.randint(1,6))
+                            mana=mana+mana_from_potion
+                            total_mana_potions=total_mana_potions-1
+                            print(f'You took a potion of mana. You recovered {mana_from_potion} mp. You are at {mana} hp. You have {total_mana_potions} potions left.')
+                            continue
+                        else:
+                            print('You are out of health potions.')
+                            continue
+
     
             # move (5)
             if player_action=='5':
@@ -442,19 +461,16 @@ while total_fights>0:
                     continue
                 
             if purchase==('2'):
-                print('this item is out of stock')
-                time.sleep(1)
-                continue
-                #if total_gold>=30:
-                    #total_gold=total_gold-30
-                    #total_mana_potions=total_mana_potions+1
-                    #print('you purchased a potion of mana')
-                    #time.sleep(1)
-                    #continue
-                #else:
-                    #print('you do not have enough gold')
-                    #time.sleep(1)
-                    #continue
+                if total_gold>=30:
+                    total_gold=total_gold-30
+                    total_mana_potions=total_mana_potions+1
+                    print('you purchased a potion of mana')
+                    time.sleep(1)
+                    continue
+                else:
+                    print('you do not have enough gold')
+                    time.sleep(1)
+                    continue
 
             if purchase==('3'):
                 if total_gold>=10:
