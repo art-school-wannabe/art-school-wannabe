@@ -10,7 +10,7 @@ import time
 player_health=48
 
 # mana
-mana=100
+mana=40
 
 # distance
 distance=1
@@ -270,7 +270,7 @@ while total_fights>0:
 mp                  {mana}
 ------------------------
 1 flame             10
-2 lightening bolt   20
+2 lightening bolt   30
 ------------------------""")
 
 
@@ -280,7 +280,7 @@ mp                  {mana}
                     if spell_cast=='1':
                         mana=mana-10
                         if (random.randint(1,20))>4:
-                            player_attack=(random.randint(4,8))
+                            player_attack=(random.randint(8,12))
                             enemy_health=enemy_health-player_attack
                             if enemy_health<0:
                                 enemy_health=0
@@ -314,9 +314,9 @@ mp                  {mana}
 
                     # player attack
                     if spell_cast=='2':
-                        mana=mana-20
+                        mana=mana-30
                         if (random.randint(1,20))>4:
-                            player_attack=(random.randint(4,8))
+                            player_attack=(random.randint(8,12))
                             enemy_health=enemy_health-player_attack
                             if enemy_health<0:
                                 enemy_health=0
@@ -441,8 +441,30 @@ mp                  {mana}
         continue
 
 
+    # 2 smiley interaction
+    if tavern_action=='2':
+        print('\"Hunter, I see the monsters haven\'t gotten you yet. Can\'t say the same for all your peers.\"')
+        time.sleep(1)
+        player_action=input('\"I take it you want a drink?\" (y or n)')
+        if player_action=='n':
+            print('\"To early for some I guess\"')
+            time.sleep(1)
+            print('\"Well I\'ll see you later. And be safe\"')
+            time.sleep(1)
+            continue
+        if player_action=='y':
+            print('\"Ah, one to have some fun in battle I see. I knew I liked you\"')
+            health_from_potion=random.randint(8,15)
+            player_health=player_health+health_from_potion
+            time.sleep(1)
+            print(f'you gained {health_from_potion} hp')
+            time.sleep(1)
+            print('\"Have fun, and remeber, be safe\"')
+            time.sleep(1)
+            continue
+
     # 3 shop 
-    if tavern_action==('3'):
+    if tavern_action=='3':
         print('Smiley offers a few small items for sale')
         time.sleep(1)
         print(f"""------------------------------
