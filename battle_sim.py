@@ -148,7 +148,7 @@ while total_fights>0:
 
             #reward alert and inventory update
             print(f'{gold} gold, {reward_arrows} arrows, {reward_potions} health potions, {item_reward}, and {experience} experience')
-            mana=mana+2
+            mana=mana+20
             total_health_potions=(total_health_potions+reward_potions)
             total_arrows=(total_arrows+reward_arrows)
             total_gold=total_gold+gold
@@ -456,6 +456,7 @@ mp                  {mana}
             print('\"Ah, one to have some fun in battle I see. I knew I liked you\"')
             health_from_potion=random.randint(8,15)
             player_health=player_health+health_from_potion
+            mana=mana+10
             time.sleep(1)
             print(f'you gained {health_from_potion} hp')
             time.sleep(1)
@@ -524,9 +525,6 @@ you have             {total_gold} gold
 1) potion of health       {total_health_potions}
 2)   potion of mana       {total_mana_potions}
 3)           arrows       {total_arrows}
-4)             gold       {total_gold}
-
-   {mana} mana   {total_experience} experience
 ------------------------------""")
 
             # exit shop
