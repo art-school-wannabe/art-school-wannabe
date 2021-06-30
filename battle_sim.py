@@ -15,6 +15,9 @@ mana=40
 # distance
 distance=1
 
+# amount of drinks
+drink=1
+
 # inventory
 total_experience=0
 total_gold=80
@@ -95,19 +98,22 @@ while total_fights>0:
         time.sleep(1)
         enemy_selection=input('Choose a bounty.')
 
-        if enemy_selection==('a') or ('A'):
+        if enemy_selection=='0':
+            continue
+
+        if enemy_selection=='a':
             enemy_health=creaturea_health
             enemy_size=creaturea_size
             experience=creaturea_experience
             gold=creaturea_gold
 
-        if enemy_selection==('b') or ('B'):
+        if enemy_selection=='b':
             enemy_health=creatureb_health
             enemy_size=creatureb_size
             experience=creatureb_experience
             gold=creatureb_gold
 
-        if enemy_selection==('c') or ('C'):
+        if enemy_selection=='c':
             enemy_health=creaturec_health
             enemy_size=creaturec_size
             experience=creaturec_experience
@@ -138,7 +144,7 @@ while total_fights>0:
 
         # reward function
         def reward():
-            global mana, gold, total_health_potions, total_arrows, experience, total_gold, total_experience
+            global mana, gold, total_health_potions, total_arrows, experience, total_gold, total_experience, distance
 
             # reward variables 
             reward_arrows=random.randint(6,8)
@@ -148,6 +154,7 @@ while total_fights>0:
 
             #reward alert and inventory update
             print(f'{gold} gold, {reward_arrows} arrows, {reward_potions} health potions, {item_reward}, and {experience} experience')
+            distance=1
             mana=mana+20
             total_health_potions=(total_health_potions+reward_potions)
             total_arrows=(total_arrows+reward_arrows)
@@ -441,26 +448,34 @@ mp                  {mana}
         continue
 
 
-    # 2 smiley interaction
+    # 2 get a drink interaction
     if tavern_action=='2':
-        print('\"Hunter, I see the monsters haven\'t gotten you yet. Can\'t say the same for all your peers.\"')
-        time.sleep(1)
-        player_action=input('\"I take it you want a drink?\" (y or n)')
-        if player_action=='n':
-            print('\"To early for some I guess\"')
+        if drink<=2:
+            print('\"Hunter, I see the monsters haven\'t gotten you yet. Can\'t say the same for all your peers.\"')
             time.sleep(1)
-            print('\"Well I\'ll see you later. And be safe\"')
+            player_action=input('\"I take it you want a drink?\" (y or n)')
+            if player_action=='n':
+                print('\"To early for some I guess\"')
+                time.sleep(1)
+                print('\"Well I\'ll see you later. And be safe\"')
+                time.sleep(1)
+                continue
+            if player_action=='y':
+                print('\"Ah, one to have some fun in battle I see. I knew I liked you\"')
+                health_from_potion=random.randint(8,15)
+                player_health=player_health+health_from_potion
+                mana=mana+10
+                drink=drink+1
+                time.sleep(1)
+                print(f'you gained {health_from_potion} hp')
+                time.sleep(1)
+                print('\"Have fun, and remeber, be safe\"')
+                time.sleep(1)
+                continue
+        else:
+            print('\"Careful, you gotta slow down before I gotta take that sword from you.\"')
             time.sleep(1)
-            continue
-        if player_action=='y':
-            print('\"Ah, one to have some fun in battle I see. I knew I liked you\"')
-            health_from_potion=random.randint(8,15)
-            player_health=player_health+health_from_potion
-            mana=mana+10
-            time.sleep(1)
-            print(f'you gained {health_from_potion} hp')
-            time.sleep(1)
-            print('\"Have fun, and remeber, be safe\"')
+            print('you can not have any more drinks right now')
             time.sleep(1)
             continue
 
@@ -532,6 +547,7 @@ you have             {total_gold} gold
                 print('Smiley puts the items back under the bar')
                 time.sleep(1)
                 break
+
 
     # 4 leave the tavern
     if tavern_action==('4'):
