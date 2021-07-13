@@ -50,10 +50,10 @@ while total_fights>0:
 
     # tavern selection menu
     tavern_action=input("""-----------------
-1 take a bounty 
+1 take a bounty
 2 grab a drink
 3 buy items
-4 leave the tavern 
+0 end game
 -----------------""")
 
     
@@ -118,7 +118,7 @@ while total_fights>0:
             enemy_size=creaturec_size
             experience=creaturec_experience
             gold=creaturec_gold
-
+            
 
         # enemy attack function
         def enemy_action():
@@ -164,7 +164,9 @@ while total_fights>0:
             print('you return to the tavern')
 
         # opening alert 
-        print(f'a {enemy_size} creature has approached you. It appears hostile.')
+        print(f'You step out onto the dirt trail outside the tavern and journey off deep into the forest ahead.')
+        time.sleep(1)
+        print(f'A short walk later, a {enemy_size} creature has approached you. It appears hostile.')
         time.sleep(1)
         print("""------------------------
 1 attack with sword
@@ -237,9 +239,9 @@ while total_fights>0:
                 if total_arrows>0:
                     total_arrows=total_arrows-1
                     if distance==1:
-                        attack_chance=(random.randint(1,20))
-                    else:
                         attack_chance=(random.randint(1,8))
+                    else:
+                        attack_chance=(random.randint(1,20))
                     if attack_chance>4:
                         player_attack=(random.randint(4,8))
                         enemy_health=(enemy_health-player_attack)
@@ -272,7 +274,6 @@ while total_fights>0:
 
             # spell selection menu
             if player_action=="3":
-                if mana>0:
                     spell_cast=input(f"""------------------------
 mp                  {mana}
 ------------------------
@@ -285,71 +286,77 @@ mp                  {mana}
     
                     # player attack
                     if spell_cast=='1':
-                        mana=mana-10
-                        if (random.randint(1,20))>4:
-                            player_attack=(random.randint(8,12))
-                            enemy_health=enemy_health-player_attack
-                            if enemy_health<0:
-                                enemy_health=0
-                            print(f'You cast flame dealing {player_attack} damage. The creature is at {enemy_health} hp.')
-                            if enemy_health==0:
-                                print('The creature died.')
+                        if mana>=10:
+                            mana=mana-10
+                            if (random.randint(1,20))>4:
+                                player_attack=(random.randint(8,12))
+                                enemy_health=enemy_health-player_attack
+                                if enemy_health<0:
+                                    enemy_health=0
+                                print(f'You cast flame dealing {player_attack} damage. The creature is at {enemy_health} hp.')
+                                if enemy_health==0:
+                                    print('The creature died.')
+                                    time.sleep(1)
+                                    reward()
+                                    time.sleep(1)
+                                    break
+                                fire_damage()
+                                if enemy_health==0:
+                                    print('The creature died.')
+                                    time.sleep(1)
+                                    reward()
+                                    time.sleep(1)
+                                    break
+                            else:
+                                print('You missed the spell.')
                                 time.sleep(1)
-                                reward()
-                                time.sleep(1)
-                                break
-                            fire_damage()
-                            if enemy_health==0:
-                                print('The creature died.')
-                                time.sleep(1)
-                                reward()
-                                time.sleep(1)
-                                break
-                        else:
-                            print('You missed the spell.')
-                            time.sleep(1)
 
-                        # enemy attack
-                        enemy_action()
-                        if player_health==0:
-                            time.sleep(1)
-                            exit()
-                        continue
+                            # enemy attack
+                            enemy_action()
+                            if player_health==0:
+                                time.sleep(1)
+                                exit()
+                            continue
+                                
+                        else:
+                            print('You do not have enough mana')
+                            continue
 
     
                     # lightening bolt spell
 
                     # player attack
                     if spell_cast=='2':
-                        mana=mana-30
-                        if (random.randint(1,20))>4:
-                            player_attack=(random.randint(8,12))
-                            enemy_health=enemy_health-player_attack
-                            if enemy_health<0:
-                                enemy_health=0
-                            print(f'You cast lightening bolt dealing {player_attack} damage. The creature is at {enemy_health} hp.')
-                            if enemy_health==0:
-                                print('The creature died.')
+                        if mana>=30:
+                            mana=mana-30
+                            if (random.randint(1,20))>4:
+                                player_attack=(random.randint(8,12))
+                                enemy_health=enemy_health-player_attack
+                                if enemy_health<0:
+                                    enemy_health=0
+                                print(f'You cast lightening bolt dealing {player_attack} damage. The creature is at {enemy_health} hp.')
+                                if enemy_health==0:
+                                    print('The creature died.')
+                                    time.sleep(1)
+                                    rewrad()
+                                    time.sleep(1)
+                                    break
                                 time.sleep(1)
-                                rewrad()
+                                print('The creature is temporarly paralyzed. It does not attack.')
+                                continue
+
+                            # enemy attack
+                            else:
+                                print('You missed the spell.')
                                 time.sleep(1)
-                                break
-                            time.sleep(1)
-                            print('The creature is temporarly paralyzed. It does not attack.')
-                            continue
-                    
-                    # enemy attack
+                                enemy_action()
+                                if player_health==0:
+                                    time.sleep(1)
+                                    exit()
+                                continue
                         else:
-                            print('You missed the spell.')
-                            time.sleep(1)
-                            enemy_action()
-                            if player_health==0:
-                                time.sleep(1)
-                                exit()
+                            print('You do not have enough mana.')
                             continue
-                else:
-                    print('You are out of mana.')
-                    continue
 
 
             # check inventory (4)
@@ -359,7 +366,6 @@ mp                  {mana}
 2)   potion of mana       {total_mana_potions}
 3)           arrows       {total_arrows}
 4)             gold       {total_gold}
-
    {mana} mana   {total_experience} experience
 ------------------------------
          (0) exit""")
@@ -392,8 +398,13 @@ mp                  {mana}
                             print(f'You took a potion of mana. You recovered 20 mp. You are at {mana} hp. You have {total_mana_potions} potions left.')
                             continue
                         else:
-                            print('You are out of health potions.')
+                            print('You are out of potions of mana.')
                             continue
+                    
+                    # use nonusable item
+                    if inventory_action=='3' or '4':
+                        print('This item is not usable')
+                        continue
 
     
             # move (5)
@@ -491,7 +502,7 @@ you have             {total_gold} gold
 3 arrows (4 count)   10 gold
      4 check inventory
 ------------------------------
-     5 finish shopping""")
+     0 finish shopping""")
         while 1>0:
             purchase=input('')
 
@@ -543,14 +554,14 @@ you have             {total_gold} gold
 ------------------------------""")
 
             # exit shop
-            if purchase==('5'):
+            if purchase==('0'):
                 print('Smiley puts the items back under the bar')
                 time.sleep(1)
                 break
 
 
     # 4 leave the tavern
-    if tavern_action==('4'):
+    if tavern_action==('0'):
         print('you step out of the tavern and take a deep breathe of fresh air after a long days work')
         time.sleep(1)
         exit()
