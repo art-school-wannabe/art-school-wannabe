@@ -396,7 +396,7 @@ mp                  {mana}
                         if total_mana_potions>0:
                             mana=mana+20
                             total_mana_potions=total_mana_potions-1
-                            print(f'You took a potion of mana. You recovered 20 mp. You are at {mana} hp. You have {total_mana_potions} potions left.')
+                            print(f'You took a potion of mana. You recovered 20 mp. You are at {mana} mp. You have {total_mana_potions} potions left.')
                             continue
                         else:
                             print('You are out of potions of mana.')
