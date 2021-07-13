@@ -144,7 +144,7 @@ while total_fights>0:
 
         # reward function
         def reward():
-            global mana, gold, total_health_potions, total_arrows, experience, total_gold, total_experience, distance
+            global mana, gold, total_health_potions, total_arrows, experience, total_gold, total_experience, distance, drink
 
             # reward variables 
             reward_arrows=random.randint(6,8)
@@ -153,13 +153,14 @@ while total_fights>0:
             item_reward=(random.choice(item_list))
 
             #reward alert and inventory update
-            print(f'{gold} gold, {reward_arrows} arrows, {reward_potions} health potions, {item_reward}, and {experience} experience')
+            print(f'{gold} gold, {reward_arrows} arrows, {reward_potions} health potions, and {experience} experience')
             distance=1
             mana=mana+20
             total_health_potions=(total_health_potions+reward_potions)
             total_arrows=(total_arrows+reward_arrows)
             total_gold=total_gold+gold
             total_experience=total_experience+experience
+            drink=1
             time.sleep(1)
             print('you return to the tavern')
 
