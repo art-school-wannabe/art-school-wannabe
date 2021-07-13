@@ -61,31 +61,31 @@ while total_fights>0:
     if tavern_action==('1'):
 
         # creature a 
-        creaturea_health=random.randint(26,42)
-        if creaturea_health<34:
+        creaturea_health=random.randint(26,82)
+        if creaturea_health<54:
             creaturea_size='small'
         else:
             creaturea_size='large'
         creaturea_experience=(creaturea_health*40)
-        creaturea_gold=creaturea_health*2
-    
+        creaturea_gold=creaturea_health
+
         # creature b
-        creatureb_health=random.randint(26,42)
-        if creatureb_health<34:
+        creatureb_health=random.randint(26,82)
+        if creatureb_health<54:
             creatureb_size='small'
         else:
             creatureb_size='large'
         creatureb_experience=(creatureb_health*40)
-        creatureb_gold=creatureb_health*2
+        creatureb_gold=creatureb_health
     
         # creature c 
-        creaturec_health=random.randint(26,42)
-        if creaturec_health<34:
+        creaturec_health=random.randint(26,82)
+        if creaturec_health<54:
             creaturec_size='small'
         else:
             creaturec_size='large'
         creaturec_experience=(creaturec_health*40)
-        creaturec_gold=creaturec_health*2
+        creaturec_gold=creaturec_health
     
         # bounty board selection menu
         print(f""" ______________    ______________    ______________
