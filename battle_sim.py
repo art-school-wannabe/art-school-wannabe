@@ -61,7 +61,7 @@ while total_fights>0:
     if tavern_action==('1'):
 
         # creature a 
-        creaturea_health=random.randint(26,82)
+        creaturea_health=random.randint(26,68)
         if creaturea_health<54:
             creaturea_size='small'
         else:
@@ -70,7 +70,7 @@ while total_fights>0:
         creaturea_gold=creaturea_health
 
         # creature b
-        creatureb_health=random.randint(26,82)
+        creatureb_health=random.randint(26,68)
         if creatureb_health<54:
             creatureb_size='small'
         else:
@@ -79,7 +79,7 @@ while total_fights>0:
         creatureb_gold=creatureb_health
     
         # creature c 
-        creaturec_health=random.randint(26,82)
+        creaturec_health=random.randint(26,68)
         if creaturec_health<54:
             creaturec_size='small'
         else:
@@ -244,7 +244,7 @@ while total_fights>0:
                     else:
                         attack_chance=(random.randint(1,20))
                     if attack_chance>4:
-                        player_attack=(random.randint(4,8))
+                        player_attack=(random.randint(4,12))
                         enemy_health=(enemy_health-player_attack)
                         if enemy_health<0:
                             enemy_health=0
@@ -382,7 +382,7 @@ mp                  {mana}
                     # use health potion 
                     if  inventory_action=='1':
                         if total_health_potions>0:
-                            health_from_potion=(random.randint(1,6))
+                            health_from_potion=(random.randint(4,8))
                             player_health=player_health+health_from_potion
                             total_health_potions=total_health_potions-1
                             print(f'You took a potion of health. You recovered {health_from_potion} hp. You are at {player_health} hp. You have {total_health_potions} potions left.')
