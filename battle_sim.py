@@ -28,25 +28,27 @@ total_arrows=random.randint(12,16)
 
 # define functions
 
+# slow print function
+def sprint(str):
+    print(str)
+    time.sleep(1)
+
 # fire damage function
 def fire_damage():
     global enemy_health
     
     player_attack=(random.randint(2,4))
     enemy_health=enemy_health-player_attack
-    print(f'The creature is on fire. It takes {player_attack} damage.')
+    sprint(f'The creature is on fire. It takes {player_attack} damage.')
     if enemy_health<0:
         enemy_health=0
-    time.sleep(1)
 
 
 # game start
-print('you step into the tavern')
-time.sleep(1)
+sprint('You step into the tavern.')
 
 # fight repeat
-total_fights=1
-while total_fights>0:
+while 1>0:
 
     # tavern selection menu
     tavern_action=input("""-----------------
@@ -57,10 +59,10 @@ while total_fights>0:
 -----------------""")
 
     
-    # 1 bounty board 
+    # 1 take a bounty
     if tavern_action==('1'):
 
-        # creature a 
+        # define creature a 
         creaturea_health=random.randint(26,68)
         if creaturea_health<54:
             creaturea_size='small'
@@ -69,7 +71,7 @@ while total_fights>0:
         creaturea_experience=(creaturea_health*40)
         creaturea_gold=creaturea_health
 
-        # creature b
+        # define creature b
         creatureb_health=random.randint(26,68)
         if creatureb_health<54:
             creatureb_size='small'
@@ -78,7 +80,7 @@ while total_fights>0:
         creatureb_experience=(creatureb_health*40)
         creatureb_gold=creatureb_health
     
-        # creature c 
+        # define creature c 
         creaturec_health=random.randint(26,68)
         if creaturec_health<54:
             creaturec_size='small'
@@ -88,31 +90,34 @@ while total_fights>0:
         creaturec_gold=creaturec_health
     
         # bounty board selection menu
-        print(f""" ______________    ______________    ______________
+        sprint(f""" ______________    ______________    ______________
 |  Creature A  |  |  Creature B  |  |  Creature C  |
 |  size: {creaturea_size} |  |  size: {creatureb_size} |  |  size: {creaturec_size} |
 |  exp: {creaturea_experience}   |  |  exp: {creatureb_experience}   |  |  exp: {creaturec_experience}   |
 |    Reward    |  |    Reward    |  |    Reward    |
 |   {creaturea_gold}  gold   |  |   {creatureb_gold}  gold   |  |   {creaturec_gold}  gold   |
  ______________    ______________    ______________ """)
-        time.sleep(1)
         enemy_selection=input('Choose a bounty.')
 
+        # leave bounty board
         if enemy_selection=='0':
             continue
 
+        # set creature a
         if enemy_selection=='a':
             enemy_health=creaturea_health
             enemy_size=creaturea_size
             experience=creaturea_experience
             gold=creaturea_gold
 
+        # set creature b
         if enemy_selection=='b':
             enemy_health=creatureb_health
             enemy_size=creatureb_size
             experience=creatureb_experience
             gold=creatureb_gold
 
+        # set creature c
         if enemy_selection=='c':
             enemy_health=creaturec_health
             enemy_size=creaturec_size
@@ -122,8 +127,7 @@ while total_fights>0:
 
         # enemy attack function
         def enemy_action():
-            global player_health
-            global distance
+            global player_health, distance
 
             if distance==1:
                 attack_chance=(random.randint(1,20))
@@ -134,13 +138,11 @@ while total_fights>0:
                 player_health=(player_health-enemy_attack)
                 if player_health<0:
                     player_health=0
-                print(f'The creature attacked dealing {enemy_attack} damage. You are at {player_health} hp.')
-                time.sleep(2)
+                sprint(f'The creature attacked dealing {enemy_attack} damage. You are at {player_health} hp.')
                 if player_health==0:
-                    print('You died.')
+                    sprint('You died.')
             else:
-                print('The creature missed the attack.')
-                time.sleep(1)
+                sprint('The creature missed the attack.')
 
         # reward function
         def reward():
@@ -153,7 +155,8 @@ while total_fights>0:
             item_reward=(random.choice(item_list))
 
             #reward alert and inventory update
-            print(f'{gold} gold, {reward_arrows} arrows, {reward_potions} health potions, and {experience} experience')
+            time.sleep(1)
+            sprint(f'You got {gold} gold, {reward_arrows} arrows, {reward_potions} health potions, and {experience} experience.')
             distance=1
             mana=mana+20
             total_health_potions=(total_health_potions+reward_potions)
@@ -161,23 +164,19 @@ while total_fights>0:
             total_gold=total_gold+gold
             total_experience=total_experience+experience
             drink=1
-            time.sleep(1)
-            print('you return to the tavern')
+            sprint('You return to the tavern.')
+
 
         # opening alert 
-        print(f'You step out onto the dirt trail outside the tavern and journey off deep into the forest ahead.')
-        time.sleep(1)
-        print(f'A short walk later, a {enemy_size} creature has approached you. It appears hostile.')
-        time.sleep(1)
-        print("""------------------------
+        sprint(f'You step out onto the dirt trail outside the tavern and journey off deep into the forest ahead.')
+        sprint(f'A short walk later, a {enemy_size} creature has approached you. It appears hostile.')
+        sprint("""------------------------
 1 attack with sword
 2 attack with crossbow
 3 cast a spell
 4 check inventory
 5 move
 ------------------------""")
-        time.sleep(1)
-
 
         # round repeat
         while 1>0:
@@ -188,14 +187,13 @@ while total_fights>0:
     
             # controls info pannel (0)
             if player_action=="0":
-                print("""------------------------
+                sprint("""------------------------
 1 attack with sword
 2 attack with crossbow
 3 cast a spell
 4 check inventory
 5 move
 ------------------------""")
-                time.sleep(1)
                 continue
     
     
@@ -209,26 +207,20 @@ while total_fights>0:
                         enemy_health=(enemy_health-player_attack)
                         if enemy_health<0:
                             enemy_health=0
-                        print(f'you swung you sword at the creature dealing {player_attack} damage. The creature is at {enemy_health} hp.')
-                        time.sleep(1)
+                        sprint(f'You swung you sword at the creature dealing {player_attack} damage. The creature is at {enemy_health} hp.')
                         if enemy_health==0:
-                            print('The creature died.')
-                            time.sleep(1)
+                            sprint('The creature died.')
                             reward()
-                            time.sleep(1)
                             break
                     else:
-                        print('You missed the attack.')
-                        time.sleep(1)
+                        sprint('You missed the attack.')
                 else:
-                    print('You are to far from the creature.')
-                    time.sleep(1)
+                    sprint('You are to far from the creature.')
                     continue
 
                 # enemy attack
                 enemy_action()
                 if player_health==0:
-                    time.sleep(1)
                     exit()
                 continue
 
@@ -248,27 +240,23 @@ while total_fights>0:
                         enemy_health=(enemy_health-player_attack)
                         if enemy_health<0:
                             enemy_health=0
-                        print(f'You shot the creature with your crossbow doing {player_attack} damage. The creature is at {enemy_health} hp.')
-                        time.sleep(1)
+                        sprint(f'You shot the creature with your crossbow doing {player_attack} damage. The creature is at {enemy_health} hp.')
                         if enemy_health==0:
-                            print('The creature died.')
-                            time.sleep(1)
+                            sprint('The creature died.')
                             reward()
-                            time.sleep(1)
                             break
                     else:
-                        print('You missed the attack.')
-                        time.sleep(1)
+                        sprint('You missed the attack.')
 
                     # enemy attack
                     enemy_action()
                     if player_health==0:
-                        time.sleep(1)
                         exit()
                     continue
 
                 else:
-                    print('you are out of arrows')
+                    sprint('You are out of arrows.')
+                    continue
 
     
             # cast a spell (3)
@@ -294,33 +282,27 @@ mp                  {mana}
                                 enemy_health=enemy_health-player_attack
                                 if enemy_health<0:
                                     enemy_health=0
-                                print(f'You cast flame dealing {player_attack} damage. The creature is at {enemy_health} hp.')
+                                sprint(f'You cast flame dealing {player_attack} damage. The creature is at {enemy_health} hp.')
                                 if enemy_health==0:
-                                    print('The creature died.')
-                                    time.sleep(1)
+                                    sprint('The creature died.')
                                     reward()
-                                    time.sleep(1)
                                     break
                                 fire_damage()
                                 if enemy_health==0:
-                                    print('The creature died.')
-                                    time.sleep(1)
+                                    sprint('The creature died.')
                                     reward()
-                                    time.sleep(1)
                                     break
                             else:
-                                print('You missed the spell.')
-                                time.sleep(1)
+                                sprint('You missed the spell.')
 
                             # enemy attack
                             enemy_action()
                             if player_health==0:
-                                time.sleep(1)
                                 exit()
                             continue
                                 
                         else:
-                            print('You do not have enough mana')
+                            sprint('You do not have enough mana')
                             continue
 
     
@@ -335,28 +317,22 @@ mp                  {mana}
                                 enemy_health=enemy_health-player_attack
                                 if enemy_health<0:
                                     enemy_health=0
-                                print(f'You cast lightening bolt dealing {player_attack} damage. The creature is at {enemy_health} hp.')
+                                sprint(f'You cast lightening bolt dealing {player_attack} damage. The creature is at {enemy_health} hp.')
                                 if enemy_health==0:
-                                    print('The creature died.')
-                                    time.sleep(1)
+                                    sprint('The creature died.')
                                     rewrad()
-                                    time.sleep(1)
                                     break
-                                time.sleep(1)
-                                print('The creature is temporarly paralyzed. It does not attack.')
                                 continue
 
                             # enemy attack
                             else:
-                                print('You missed the spell.')
-                                time.sleep(1)
+                                sprint('You missed the spell.')
                                 enemy_action()
                                 if player_health==0:
-                                    time.sleep(1)
                                     exit()
                                 continue
                         else:
-                            print('You do not have enough mana.')
+                            sprint('You do not have enough mana.')
                             continue
 
 
@@ -385,10 +361,10 @@ mp                  {mana}
                             health_from_potion=(random.randint(4,8))
                             player_health=player_health+health_from_potion
                             total_health_potions=total_health_potions-1
-                            print(f'You took a potion of health. You recovered {health_from_potion} hp. You are at {player_health} hp. You have {total_health_potions} potions left.')
+                            sprint(f'You took a potion of health. You recovered {health_from_potion} hp. You are at {player_health} hp. You have {total_health_potions} potions left.')
                             continue
                         else:
-                            print('You are out of health potions.')
+                            sprint('You are out of health potions.')
                             continue
                         
                     # use mana potion  
@@ -396,15 +372,15 @@ mp                  {mana}
                         if total_mana_potions>0:
                             mana=mana+20
                             total_mana_potions=total_mana_potions-1
-                            print(f'You took a potion of mana. You recovered 20 mp. You are at {mana} mp. You have {total_mana_potions} potions left.')
+                            sprint(f'You took a potion of mana. You recovered 20 mp. You are at {mana} mp. You have {total_mana_potions} potions left.')
                             continue
                         else:
-                            print('You are out of potions of mana.')
+                            sprint('You are out of potions of mana.')
                             continue
                     
                     # use nonusable item
                     if inventory_action=='3' or '4':
-                        print('This item is not usable')
+                        sprint('This item is not usable')
                         continue
 
     
@@ -420,13 +396,11 @@ mp                  {mana}
                 # step forward
                 if move_action=='1':
                     if distance==1:
-                        print('You cant step any closer to the creature.')
-                        time.sleep(1)
+                        sprint('You cant step any closer to the creature.')
                         continue
                     else:
                         distance=distance-1
-                        print('you stepped toward the creature.')
-                        time.sleep(1)
+                        sprint('You stepped toward the creature.')
                         continue
 
 
@@ -434,14 +408,12 @@ mp                  {mana}
                 if move_action=='2':
                     if distance==1:
                         distance=distance+1
-                        print('You stepped from the creature.')
-                        time.sleep(1)
+                        sprint('You stepped from the creature.')
                         continue
                     else:
-                        move_action=input('You are already stepped away from the creature. Do you want to run away? (Y/N)')
-                        if move_action=='Y':
-                            print('You ran away.')
-                            time.sleep(1)
+                        move_action=input('You are already stepped away from the creature. Do you want to run away? (y or n)')
+                        if move_action=='y':
+                            sprint('You ran away.')
                             break
                         else:
                             time.sleep(1)
@@ -450,8 +422,7 @@ mp                  {mana}
 
                 # run away 
                 if move_action=='3':
-                    print('You ran away.')
-                    time.sleep(1)
+                    sprint('You ran away.')
                     break
 
     
@@ -463,38 +434,29 @@ mp                  {mana}
     # 2 get a drink interaction
     if tavern_action=='2':
         if drink<=2:
-            print('\"Hunter, I see the monsters haven\'t gotten you yet. Can\'t say the same for all your peers.\"')
-            time.sleep(1)
+            sprint('\"Hunter, I see the monsters haven\'t gotten you yet. Can\'t say the same for all your peers.\"')
             player_action=input('\"I take it you want a drink?\" (y or n)')
             if player_action=='n':
-                print('\"To early for some I guess\"')
-                time.sleep(1)
-                print('\"Well I\'ll see you later. And be safe\"')
-                time.sleep(1)
+                sprint('\"To early for some I guess\"')
+                sprint('\"Well I\'ll see you later. And be safe\"')
                 continue
             if player_action=='y':
-                print('\"Ah, one to have some fun in battle I see. I knew I liked you\"')
+                sprint('\"Ah, one to have some fun in battle I see. I knew I liked you\"')
                 health_from_potion=random.randint(8,15)
                 player_health=player_health+health_from_potion
                 mana=mana+10
                 drink=drink+1
-                time.sleep(1)
-                print(f'you gained {health_from_potion} hp')
-                time.sleep(1)
-                print('\"Have fun, and remeber, be safe\"')
-                time.sleep(1)
+                sprint(f'you gained {health_from_potion} hp')
+                sprint('\"Have fun, and remeber, be safe\"')
                 continue
         else:
-            print('\"Careful, you gotta slow down before I gotta take that sword from you.\"')
-            time.sleep(1)
-            print('you can not have any more drinks right now')
-            time.sleep(1)
+            sprint('\"Careful, you gotta slow down before I gotta take that sword from you.\"')
+            sprint('you can not have any more drinks right now')
             continue
 
     # 3 shop 
     if tavern_action=='3':
-        print('Smiley offers a few small items for sale')
-        time.sleep(1)
+        sprint('Smiley offers a few small items for sale')
         print(f"""------------------------------
 you have             {total_gold} gold
 ------------------------------
@@ -512,12 +474,10 @@ you have             {total_gold} gold
                 if total_gold>=50:
                     total_gold=total_gold-50
                     total_health_potions=total_health_potions+1
-                    print('you purchased a health potion')
-                    time.sleep(1)
+                    sprint('You purchased a health potion.')
                     continue
                 else:
-                    print('you do not have enough gold')
-                    time.sleep(1)
+                    sprint('You do not have enough gold.')
                     continue
 
             # buy mana potion
@@ -525,12 +485,10 @@ you have             {total_gold} gold
                 if total_gold>=30:
                     total_gold=total_gold-30
                     total_mana_potions=total_mana_potions+1
-                    print('you purchased a potion of mana')
-                    time.sleep(1)
+                    sprint('You purchased a potion of mana.')
                     continue
                 else:
-                    print('you do not have enough gold')
-                    time.sleep(1)
+                    sprint('You do not have enough gold.')
                     continue
 
             # buy arrows
@@ -538,12 +496,10 @@ you have             {total_gold} gold
                 if total_gold>=10:
                     total_gold=total_gold-10
                     total_arrows=total_arrows+4
-                    print('you purchased a bundle of arrows')
-                    time.sleep(1)
+                    sprint('You purchased a bundle of arrows.')
                     continue
                 else:
-                    print('you do not have enough gold')
-                    time.sleep(1)
+                    sprint('You do not have enough gold.')
                     continue
 
             # check inventory
@@ -556,13 +512,11 @@ you have             {total_gold} gold
 
             # exit shop
             if purchase==('0'):
-                print('Smiley puts the items back under the bar')
-                time.sleep(1)
+                sprint('Smiley puts the items back under the bar.')
                 break
 
 
-    # 4 leave the tavern
+    # 4 exit game
     if tavern_action==('0'):
-        print('you step out of the tavern and take a deep breathe of fresh air after a long days work')
-        time.sleep(1)
+        sprint('You step out of the tavern and take a deep breathe of fresh air after a long days work.')
         exit()
