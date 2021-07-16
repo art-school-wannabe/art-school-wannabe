@@ -88,6 +88,11 @@ while 1>0:
             creaturec_size='large'
         creaturec_experience=(creaturec_health*40)
         creaturec_gold=creaturec_health
+        
+        # define special creature
+        special_health=random.randint(120,240)
+        special_experience=(special_health*40)
+        special_gold=special_health
     
         # bounty board selection menu
         sprint(f""" ______________    ______________    ______________
@@ -123,7 +128,14 @@ while 1>0:
             enemy_size=creaturec_size
             experience=creaturec_experience
             gold=creaturec_gold
-            
+        
+        # set special creature
+        if enemy_selection=='special':
+            enemy_health=special_health
+            enemy_size='gigantic'
+            experience=special_experience
+            gold=special_gold
+
 
         # enemy attack function
         def enemy_action():
@@ -318,6 +330,7 @@ mp                  {mana}
                                 if enemy_health<0:
                                     enemy_health=0
                                 sprint(f'You cast lightening bolt dealing {player_attack} damage. The creature is at {enemy_health} hp.')
+                                sprint('The creature is temporarily paralyzed. It does not attack.')
                                 if enemy_health==0:
                                     sprint('The creature died.')
                                     rewrad()
@@ -427,7 +440,6 @@ mp                  {mana}
 
     
         #game repeat
-        total_fights=total_fights+1
         continue
 
 
