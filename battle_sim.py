@@ -167,7 +167,6 @@ while 1>0:
             item_reward=(random.choice(item_list))
 
             #reward alert and inventory update
-            time.sleep(1)
             sprint(f'You got {gold} gold, {reward_arrows} arrows, {reward_potions} health potions, and {experience} experience.')
             distance=1
             mana=mana+20
@@ -244,7 +243,7 @@ while 1>0:
                 if total_arrows>0:
                     total_arrows=total_arrows-1
                     if distance==1:
-                        attack_chance=(random.randint(1,8))
+                        attack_chance=(random.randint(1,5))
                     else:
                         attack_chance=(random.randint(1,20))
                     if attack_chance>4:
@@ -351,14 +350,14 @@ mp                  {mana}
 
             # check inventory (4)
             if player_action=='4':
-                print(f"""------------------------------
+                print(f"""-------------------------------
 1) potion of health       {total_health_potions}
 2)   potion of mana       {total_mana_potions}
 3)           arrows       {total_arrows}
 4)             gold       {total_gold}
    {mana} mana   {total_experience} experience
-------------------------------
-         (0) exit""")
+-------------------------------
+  (5) check bounty  (0) exit""")
 
                 # inventory repeat
                 while 1>0:
@@ -391,6 +390,17 @@ mp                  {mana}
                             sprint('You are out of potions of mana.')
                             continue
                     
+                    # check bounty
+                    if inventory_action=='5':
+                        sprint(f""" ______________
+|   Creature   |
+|  size: {creaturea_size} |
+|  exp: {creaturea_experience}   |
+|    Reward    |
+|   {creaturea_gold}  gold   |
+ ______________""")
+                        continue
+
                     # use nonusable item
                     if inventory_action=='3' or '4':
                         sprint('This item is not usable')
@@ -450,30 +460,41 @@ mp                  {mana}
             player_action=input('\"I take it you want a drink?\" (y or n)')
             if player_action=='n':
                 sprint('\"To early for some I guess\"')
-                sprint('\"Well I\'ll see you later. And be safe\"')
-                continue
+                player_action=input('\"I take it you\'re here for the special bounty than?\" (y or n)')
+                if player_action=='y':
+                    sprint('\"Ah, just head over the bounty board and choose the "special" one, but i warn you, its a tough one... be safe.\"')
+                    continue
+                else:
+                    sprint('\"Well I\'ll see you later. And be safe\"')
+                    continue
             if player_action=='y':
                 sprint('\"Ah, one to have some fun in battle I see. I knew I liked you\"')
-                health_from_potion=random.randint(8,15)
-                player_health=player_health+health_from_potion
-                mana=mana+10
-                drink=drink+1
-                sprint(f'you gained {health_from_potion} hp')
-                sprint('\"Have fun, and remeber, be safe\"')
-                continue
+                if gold>=5:
+                    gold=gold-5
+                    health_from_potion=random.randint(8,15)
+                    player_health=player_health+health_from_potion
+                    mana=mana+10
+                    drink=drink+1
+                    sprint(f'you gained {health_from_potion} hp')
+                    sprint('\"Have fun, and remeber, be safe\"')
+                    continue
+                else:
+                    sprint('\"If you dont got the funds then dont be asking\"')
+                    sprint('You do not have enough gold.')
+                    continue
         else:
             sprint('\"Careful, you gotta slow down before I gotta take that sword from you.\"')
-            sprint('you can not have any more drinks right now')
+            sprint('You can not have any more drinks right now.')
             continue
 
     # 3 shop 
     if tavern_action=='3':
-        sprint('Smiley offers a few small items for sale')
+        sprint('\"So you\'re looking for some provisions? I have some stuff under the bar.\"')
         print(f"""------------------------------
 you have             {total_gold} gold
 ------------------------------
-1 potion of health   50 gold
-2 potion of mana     30 gold
+1 potion of health   30 gold
+2 potion of mana     45 gold
 3 arrows (4 count)   10 gold
      4 check inventory
 ------------------------------
@@ -483,8 +504,8 @@ you have             {total_gold} gold
 
             # buy health potion 
             if purchase==('1'):
-                if total_gold>=50:
-                    total_gold=total_gold-50
+                if total_gold>=30:
+                    total_gold=total_gold-30
                     total_health_potions=total_health_potions+1
                     sprint('You purchased a health potion.')
                     continue
@@ -494,8 +515,8 @@ you have             {total_gold} gold
 
             # buy mana potion
             if purchase==('2'):
-                if total_gold>=30:
-                    total_gold=total_gold-30
+                if total_gold>=45:
+                    total_gold=total_gold-45
                     total_mana_potions=total_mana_potions+1
                     sprint('You purchased a potion of mana.')
                     continue
