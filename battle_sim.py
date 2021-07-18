@@ -41,11 +41,11 @@ def fire_damage():
     global enemy_health, duration
     
     player_attack=(random.randint(2,4))
-    enemy_health=enemy_health-player_attack
+    enemy_health-=player_attack
     sprint(f'The creature is on fire. It takes {player_attack} damage.')
     if enemy_health<0:
         enemy_health=0
-    duration=duration-1
+    duration-=1
 
 
 # game start
@@ -153,7 +153,7 @@ while 1>0:
                 attack_chance=(random.randint(1,6))
             if attack_chance>4:
                 enemy_attack=(random.randint(4,8))
-                player_health=(player_health-enemy_attack)
+                player_health-=enemy_attack
                 if player_health<0:
                     player_health=0
                 sprint(f'The creature attacked dealing {enemy_attack} damage. You are at {player_health} hp.')
@@ -176,10 +176,10 @@ while 1>0:
             sprint(f'You got {gold} gold, {reward_arrows} arrows, {reward_potions} health potions, and {experience} experience.')
             distance=1
             mana=mana+20
-            total_health_potions=(total_health_potions+reward_potions)
-            total_arrows=(total_arrows+reward_arrows)
-            total_gold=total_gold+gold
-            total_experience=total_experience+experience
+            total_health_potions+=reward_potions
+            total_arrows+=reward_arrows
+            total_gold+=gold
+            total_experience+=experience
             drink=1
             duration=0
             sprint('You return to the tavern.')
@@ -222,7 +222,7 @@ while 1>0:
                 if distance==1:
                     if random.randint(1,20)>4:
                         player_attack=(random.randint(4,8))
-                        enemy_health=(enemy_health-player_attack)
+                        enemy_health-=player_attack
                         if enemy_health<0:
                             enemy_health=0
                         sprint(f'You swung you sword at the creature dealing {player_attack} damage. The creature is at {enemy_health} hp.')
@@ -248,14 +248,14 @@ while 1>0:
             # player attack
             if player_action=="2":
                 if total_arrows>0:
-                    total_arrows=total_arrows-1
+                    total_arrows-=1
                     if distance==1:
                         attack_chance=(random.randint(1,5))
                     else:
                         attack_chance=(random.randint(1,20))
                     if attack_chance>4:
                         player_attack=(random.randint(4,12))
-                        enemy_health=(enemy_health-player_attack)
+                        enemy_health-=player_attack
                         if enemy_health<0:
                             enemy_health=0
                         sprint(f'You shot the creature with your crossbow doing {player_attack} damage. The creature is at {enemy_health} hp.')
@@ -294,10 +294,10 @@ mp                  {mana}
                     # player attack
                     if spell_cast=='1':
                         if mana>=10:
-                            mana=mana-10
+                            mana-=10
                             if (random.randint(1,20))>4:
                                 player_attack=(random.randint(8,12))
-                                enemy_health=enemy_health-player_attack
+                                enemy_health-=player_attack
                                 if enemy_health<0:
                                     enemy_health=0
                                 sprint(f'You cast flame dealing {player_attack} damage. The creature is at {enemy_health} hp.')
@@ -325,10 +325,10 @@ mp                  {mana}
                     # player attack
                     if spell_cast=='2':
                         if mana>=30:
-                            mana=mana-30
+                            mana-=30
                             if (random.randint(1,20))>4:
                                 player_attack=(random.randint(8,12))
-                                enemy_health=enemy_health-player_attack
+                                enemy_health-=player_attack
                                 if enemy_health<0:
                                     enemy_health=0
                                 sprint(f'You cast lightening bolt dealing {player_attack} damage. The creature is at {enemy_health} hp.')
@@ -374,8 +374,8 @@ mp                  {mana}
                     if  inventory_action=='1':
                         if total_health_potions>0:
                             health_from_potion=(random.randint(4,8))
-                            player_health=player_health+health_from_potion
-                            total_health_potions=total_health_potions-1
+                            player_health+=health_from_potion
+                            total_health_potions-=1
                             sprint(f'You took a potion of health. You recovered {health_from_potion} hp. You are at {player_health} hp. You have {total_health_potions} potions left.')
                             continue
                         else:
@@ -385,8 +385,8 @@ mp                  {mana}
                     # use mana potion  
                     if inventory_action=='2':
                         if total_mana_potions>0:
-                            mana=mana+20
-                            total_mana_potions=total_mana_potions-1
+                            mana+=20
+                            total_mana_potions-=1
                             sprint(f'You took a potion of mana. You recovered 20 mp. You are at {mana} mp. You have {total_mana_potions} potions left.')
                             continue
                         else:
@@ -425,7 +425,7 @@ mp                  {mana}
                         sprint('You cant step any closer to the creature.')
                         continue
                     else:
-                        distance=distance-1
+                        distance-=1
                         sprint('You stepped toward the creature.')
                         continue
 
@@ -433,7 +433,7 @@ mp                  {mana}
                 # step backward
                 if move_action=='2':
                     if distance==1:
-                        distance=distance+1
+                        distance+=1
                         sprint('You stepped from the creature.')
                         continue
                     else:
@@ -473,11 +473,11 @@ mp                  {mana}
             if player_action=='y':
                 sprint('\"Ah, one to have some fun in battle I see. I knew I liked you\"')
                 if total_gold>=5:
-                    total_gold=total_gold-5
+                    total_gold-=5
                     health_from_potion=random.randint(8,15)
-                    player_health=player_health+health_from_potion
-                    mana=mana+10
-                    drink=drink+1
+                    player_health+=health_from_potion
+                    mana+=10
+                    drink+=1
                     sprint(f'you gained {health_from_potion} hp')
                     sprint('\"Have fun, and remeber, be safe\"')
                     continue
@@ -508,8 +508,8 @@ you have             {total_gold} gold
             # buy health potion 
             if purchase==('1'):
                 if total_gold>=30:
-                    total_gold=total_gold-30
-                    total_health_potions=total_health_potions+1
+                    total_gold-=30
+                    total_health_potions+=1
                     sprint('You purchased a health potion.')
                     continue
                 else:
@@ -519,8 +519,8 @@ you have             {total_gold} gold
             # buy mana potion
             if purchase==('2'):
                 if total_gold>=45:
-                    total_gold=total_gold-45
-                    total_mana_potions=total_mana_potions+1
+                    total_gold-=45
+                    total_mana_potions+=1
                     sprint('You purchased a potion of mana.')
                     continue
                 else:
@@ -530,8 +530,8 @@ you have             {total_gold} gold
             # buy arrows
             if purchase==('3'):
                 if total_gold>=10:
-                    total_gold=total_gold-10
-                    total_arrows=total_arrows+4
+                    total_gold-=10
+                    total_arrows+=4
                     sprint('You purchased a bundle of arrows.')
                     continue
                 else:
@@ -556,3 +556,4 @@ you have             {total_gold} gold
     if tavern_action==('0'):
         sprint('You step out of the tavern and take a deep breathe of fresh air after a long days work.')
         exit()
+    
