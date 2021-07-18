@@ -15,6 +15,9 @@ mana=40
 # distance
 distance=1
 
+# duration
+duration=0
+
 # amount of drinks
 drink=1
 
@@ -35,13 +38,14 @@ def sprint(str):
 
 # fire damage function
 def fire_damage():
-    global enemy_health
+    global enemy_health, duration
     
     player_attack=(random.randint(2,4))
     enemy_health=enemy_health-player_attack
     sprint(f'The creature is on fire. It takes {player_attack} damage.')
     if enemy_health<0:
         enemy_health=0
+    duration=duration-1
 
 
 # game start
@@ -90,7 +94,7 @@ while 1>0:
         creaturec_gold=creaturec_health
         
         # define special creature
-        special_health=random.randint(120,240)
+        special_health=random.randint(68,124)
         special_experience=(special_health*40)
         special_gold=special_health
     
@@ -139,12 +143,14 @@ while 1>0:
 
         # enemy attack function
         def enemy_action():
-            global player_health, distance
+            global player_health, distance, duration
 
+            if duration>0:
+                fire_damage()
             if distance==1:
                 attack_chance=(random.randint(1,20))
             else:
-                attack_chance=(random.randint(1,10))
+                attack_chance=(random.randint(1,6))
             if attack_chance>4:
                 enemy_attack=(random.randint(4,8))
                 player_health=(player_health-enemy_attack)
@@ -175,6 +181,7 @@ while 1>0:
             total_gold=total_gold+gold
             total_experience=total_experience+experience
             drink=1
+            duration=0
             sprint('You return to the tavern.')
 
 
@@ -298,11 +305,7 @@ mp                  {mana}
                                     sprint('The creature died.')
                                     reward()
                                     break
-                                fire_damage()
-                                if enemy_health==0:
-                                    sprint('The creature died.')
-                                    reward()
-                                    break
+                                duration=random.randint(2,3)
                             else:
                                 sprint('You missed the spell.')
 
@@ -394,10 +397,10 @@ mp                  {mana}
                     if inventory_action=='5':
                         sprint(f""" ______________
 |   Creature   |
-|  size: {creaturea_size} |
-|  exp: {creaturea_experience}   |
+|  size: {enemy_size} |
+|  exp: {experience}   |
 |    Reward    |
-|   {creaturea_gold}  gold   |
+|   {gold}  gold   |
  ______________""")
                         continue
 
@@ -469,8 +472,8 @@ mp                  {mana}
                     continue
             if player_action=='y':
                 sprint('\"Ah, one to have some fun in battle I see. I knew I liked you\"')
-                if gold>=5:
-                    gold=gold-5
+                if total_gold>=5:
+                    total_gold=total_gold-5
                     health_from_potion=random.randint(8,15)
                     player_health=player_health+health_from_potion
                     mana=mana+10
