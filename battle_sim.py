@@ -141,26 +141,48 @@ while 1>0:
             gold=special_gold
 
 
-        # enemy attack function
+        # enemy action function
         def enemy_action():
-            global player_health, distance, duration
+            global enemy_health, player_health, distance, duration
 
+            # fire effect
             if duration>0:
                 fire_damage()
-            if distance==1:
-                attack_chance=(random.randint(1,20))
+
+            # creature movment
+            if distance==2:
+                if enemy_health>8:
+                    if random.randint(1,6)==1:
+                        sprint('The creature lunges at you.')
+                        distance-=1
+                else:
+                    if random.randint(1,2)==1:
+                        sprint('The creature, close to death, retreats off into the forest.')
+                        sprint('You do not get the bounty.')
+                        distance=3
             else:
-                attack_chance=(random.randint(1,6))
-            if attack_chance>4:
-                enemy_attack=(random.randint(4,8))
-                player_health-=enemy_attack
-                if player_health<0:
-                    player_health=0
-                sprint(f'The creature attacked dealing {enemy_attack} damage. You are at {player_health} hp.')
-                if player_health==0:
-                    sprint('You died.')
-            else:
-                sprint('The creature missed the attack.')
+                if enemy_health<8:
+                    if random.randint(1,2)==1:
+                        sprint('The creature slowly retreats from you.')
+                        distance+=1
+                    
+            # enemy attack
+            if distance<3:
+                if distance==1:
+                    attack_chance=(random.randint(1,20))
+                else:
+                    attack_chance=(random.randint(1,6))
+                if attack_chance>4:
+                    enemy_attack=(random.randint(4,8))
+                    player_health-=enemy_attack
+                    if player_health<0:
+                        player_health=0
+                    sprint(f'The creature attacked dealing {enemy_attack} damage. You are at {player_health} hp.')
+                    if player_health==0:
+                        sprint('You died.')
+                else:
+                    sprint('The creature missed the attack.')
+
 
         # reward function
         def reward():
@@ -240,6 +262,9 @@ while 1>0:
                 enemy_action()
                 if player_health==0:
                     exit()
+                if distance==3:
+                    distance=1
+                    break
                 continue
 
 
@@ -270,6 +295,9 @@ while 1>0:
                     enemy_action()
                     if player_health==0:
                         exit()
+                    if distance==3:
+                        distance=1
+                        break
                     continue
 
                 else:
@@ -313,6 +341,9 @@ mp                  {mana}
                             enemy_action()
                             if player_health==0:
                                 exit()
+                            if distance==3:
+                                distance=1
+                                break
                             continue
                                 
                         else:
@@ -345,6 +376,9 @@ mp                  {mana}
                                 enemy_action()
                                 if player_health==0:
                                     exit()
+                                if distance==3:
+                                    distance=1
+                                    break    
                                 continue
                         else:
                             sprint('You do not have enough mana.')
@@ -556,4 +590,4 @@ you have             {total_gold} gold
     if tavern_action==('0'):
         sprint('You step out of the tavern and take a deep breathe of fresh air after a long days work.')
         exit()
-    
+     
