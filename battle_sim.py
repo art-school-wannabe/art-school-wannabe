@@ -1,4 +1,3 @@
-
 # import modules
 import random
 import time 
@@ -156,8 +155,8 @@ while 1>0:
                         sprint('The creature lunges at you.')
                         distance-=1
                 else:
-                    if random.randint(1,2)==1:
-                        sprint('The creature, close to death, retreats off into the forest.')
+                    if random.randint(1,4)==1:
+                        sprint('The creature, close to death, flees off into the forest.')
                         sprint('You do not get the bounty.')
                         distance=3
             else:
@@ -188,20 +187,22 @@ while 1>0:
         def reward():
             global mana, gold, total_health_potions, total_arrows, experience, total_gold, total_experience, distance, drink
 
-            # reward variables 
-            reward_arrows=random.randint(6,8)
-            reward_potions=random.randint(0,2)
-            item_list=['a tattered pelt', 'a broken arrow']
-            item_reward=(random.choice(item_list))
+            if enemy_health==0:
+                # reward variables 
+                reward_arrows=random.randint(6,8)
+                reward_potions=random.randint(0,2)
+                item_list=['a tattered pelt', 'a broken arrow']
+                item_reward=(random.choice(item_list))
 
-            #reward alert and inventory update
-            sprint(f'You got {gold} gold, {reward_arrows} arrows, {reward_potions} health potions, and {experience} experience.')
+                #reward alert and inventory update
+                sprint(f'You got {gold} gold, {reward_arrows} arrows, {reward_potions} health potions, and {experience} experience.')
+                mana=mana+20
+                total_health_potions+=reward_potions
+                total_arrows+=reward_arrows
+                total_gold+=gold
+                total_experience+=experience
+
             distance=1
-            mana=mana+20
-            total_health_potions+=reward_potions
-            total_arrows+=reward_arrows
-            total_gold+=gold
-            total_experience+=experience
             drink=1
             duration=0
             sprint('You return to the tavern.')
@@ -236,7 +237,7 @@ while 1>0:
 ------------------------""")
                 continue
     
-    
+
             # attack with sword (1)
     
             # player attack
@@ -263,7 +264,7 @@ while 1>0:
                 if player_health==0:
                     exit()
                 if distance==3:
-                    distance=1
+                    reward()
                     break
                 continue
 
@@ -296,7 +297,7 @@ while 1>0:
                     if player_health==0:
                         exit()
                     if distance==3:
-                        distance=1
+                        reward()
                         break
                     continue
 
@@ -342,7 +343,7 @@ mp                  {mana}
                             if player_health==0:
                                 exit()
                             if distance==3:
-                                distance=1
+                                rewrad()
                                 break
                             continue
                                 
@@ -377,7 +378,7 @@ mp                  {mana}
                                 if player_health==0:
                                     exit()
                                 if distance==3:
-                                    distance=1
+                                    reward()
                                     break    
                                 continue
                         else:
@@ -474,6 +475,7 @@ mp                  {mana}
                         move_action=input('You are already stepped away from the creature. Do you want to run away? (y or n)')
                         if move_action=='y':
                             sprint('You ran away.')
+                            rewrad()
                             break
                         else:
                             time.sleep(1)
@@ -483,6 +485,7 @@ mp                  {mana}
                 # run away 
                 if move_action=='3':
                     sprint('You ran away.')
+                    reward()
                     break
 
     
