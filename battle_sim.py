@@ -590,4 +590,4 @@ you have             {total_gold} gold
     if tavern_action==('0'):
         sprint('You step out of the tavern and take a deep breathe of fresh air after a long days work.')
         exit()
-     
+        
