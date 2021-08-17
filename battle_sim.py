@@ -1,3 +1,4 @@
+
 # import modules
 import random
 import time 
@@ -5,8 +6,12 @@ import time
 
 # set variables
 
-# player health 
+# player health
 player_health=48
+
+# player level
+player_level=1
+player_level_multi=(player_level/10+1)
 
 # mana
 mana=40
@@ -66,8 +71,8 @@ while 1>0:
     if tavern_action==('1'):
 
         # define creature a 
-        creaturea_health=random.randint(26,68)
-        if creaturea_health<54:
+        creaturea_health=round((player_level_multi*random.randint(26,68)))
+        if creaturea_health<player_health:
             creaturea_size='small'
         else:
             creaturea_size='large'
@@ -75,8 +80,8 @@ while 1>0:
         creaturea_gold=creaturea_health
 
         # define creature b
-        creatureb_health=random.randint(26,68)
-        if creatureb_health<54:
+        creatureb_health=round((player_level_multi*random.randint(26,68)))
+        if creatureb_health<player_health:
             creatureb_size='small'
         else:
             creatureb_size='large'
@@ -84,8 +89,8 @@ while 1>0:
         creatureb_gold=creatureb_health
     
         # define creature c 
-        creaturec_health=random.randint(26,68)
-        if creaturec_health<54:
+        creaturec_health=round((player_level_multi*random.randint(26,68)))
+        if creaturec_health<player_health:
             creaturec_size='small'
         else:
             creaturec_size='large'
@@ -93,7 +98,7 @@ while 1>0:
         creaturec_gold=creaturec_health
         
         # define special creature
-        special_health=random.randint(68,124)
+        special_health=round((player_level_multi*random.randint(68,124)))
         special_experience=(special_health*40)
         special_gold=special_health
     
@@ -185,7 +190,7 @@ while 1>0:
 
         # reward function
         def reward():
-            global mana, gold, total_health_potions, total_arrows, experience, total_gold, total_experience, distance, drink
+            global mana, gold, total_health_potions, total_arrows, experience, player_level, player_experience, total_gold, total_experience, distance, drink
 
             if enemy_health==0:
                 # reward variables 
@@ -194,13 +199,19 @@ while 1>0:
                 item_list=['a tattered pelt', 'a broken arrow']
                 item_reward=(random.choice(item_list))
 
-                #reward alert and inventory update
+                # reward alert and inventory update
                 sprint(f'You got {gold} gold, {reward_arrows} arrows, {reward_potions} health potions, and {experience} experience.')
                 mana=mana+20
                 total_health_potions+=reward_potions
                 total_arrows+=reward_arrows
                 total_gold+=gold
                 total_experience+=experience
+                
+                # level up
+                if total_experience>=(player_level*3000):
+                    player_level+=1
+                    player_level_multi=(player_level/10+1)
+                    sprint(f'You leveled up. You are now at level {player_level}.')
 
             distance=1
             drink=1
