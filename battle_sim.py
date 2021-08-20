@@ -110,7 +110,7 @@ while 1>0:
 |    Reward    |  |    Reward    |  |    Reward    |
 |   {creaturea_gold}  gold   |  |   {creatureb_gold}  gold   |  |   {creaturec_gold}  gold   |
  ______________    ______________    ______________ """)
-        enemy_selection=input('Choose a bounty.')
+        enemy_selection=input('Choose a bounty.').lower()
 
         # leave bounty board
         if enemy_selection=='0':
@@ -604,4 +604,3 @@ you have             {total_gold} gold
     if tavern_action==('0'):
         sprint('You step out of the tavern and take a deep breathe of fresh air after a long days work.')
         exit()
-        
