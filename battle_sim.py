@@ -8,12 +8,12 @@ import time
 
 # player health
 player_health=48
-player_ac=(4+player_level)
 
 # player level
 player_level=1
 player_attackmulti=(player_level/10+1)
 player_attackbonus=(2+player_level)
+player_ac=(4+player_level)
 
 # mana
 mana=40
@@ -351,7 +351,7 @@ mp                  {mana}
                         if mana>=10:
                             mana-=10
                             attack_chance=(random.randint(1,20)+player_attackbonus)
-                            if attack_chance>creature_ac
+                            if attack_chance>creature_ac:
                                 player_attack=(random.randint(1,12)+player_attackbonus)
                                 enemy_health-=player_attack
                                 if enemy_health<0:
@@ -386,7 +386,7 @@ mp                  {mana}
                         if mana>=30:
                             mana-=30
                             attack_chance=(random.randint(1,20)+player_attackbonus)
-                            if attack_chance>creature_ac
+                            if attack_chance>creature_ac:
                                 player_attack=(random.randint(1,12)+player_attackbonus)
                                 enemy_health-=player_attack
                                 if enemy_health<0:
