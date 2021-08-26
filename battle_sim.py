@@ -8,10 +8,12 @@ import time
 
 # player health
 player_health=48
+player_ac=(4+player_level)
 
 # player level
 player_level=1
-player_level_multi=(player_level/10+1)
+player_attackmulti=(player_level/10+1)
+player_attackbonus=(2+player_level)
 
 # mana
 mana=40
@@ -44,7 +46,7 @@ def sprint(str):
 def fire_damage():
     global enemy_health, duration
     
-    player_attack=(random.randint(2,4))
+    player_attack=(random.randint(1,4))
     enemy_health-=player_attack
     sprint(f'The creature is on fire. It takes {player_attack} damage.')
     if enemy_health<0:
@@ -71,7 +73,7 @@ while 1>0:
     if tavern_action==('1'):
 
         # define creature a 
-        creaturea_health=round((player_level_multi*random.randint(26,68)))
+        creaturea_health=round(player_attackmulti*random.randint(26,68))
         if creaturea_health<player_health:
             creaturea_size='small'
         else:
@@ -80,7 +82,7 @@ while 1>0:
         creaturea_gold=creaturea_health
 
         # define creature b
-        creatureb_health=round((player_level_multi*random.randint(26,68)))
+        creatureb_health=round(player_attackmulti*random.randint(26,68))
         if creatureb_health<player_health:
             creatureb_size='small'
         else:
@@ -89,7 +91,7 @@ while 1>0:
         creatureb_gold=creatureb_health
     
         # define creature c 
-        creaturec_health=round((player_level_multi*random.randint(26,68)))
+        creaturec_health=round(player_attackmulti*random.randint(26,68))
         if creaturec_health<player_health:
             creaturec_size='small'
         else:
@@ -98,7 +100,7 @@ while 1>0:
         creaturec_gold=creaturec_health
         
         # define special creature
-        special_health=round((player_level_multi*random.randint(68,124)))
+        special_health=round(player_attackmulti*random.randint(68,124))
         special_experience=(special_health*40)
         special_gold=special_health
     
@@ -122,6 +124,9 @@ while 1>0:
             enemy_size=creaturea_size
             experience=creaturea_experience
             gold=creaturea_gold
+            creature_attackmulti=player_attackmulti
+            creature_attackbonus=player_level
+            creature_ac=(4+player_level)
 
         # set creature b
         if enemy_selection=='b':
@@ -129,6 +134,8 @@ while 1>0:
             enemy_size=creatureb_size
             experience=creatureb_experience
             gold=creatureb_gold
+            creature_attackmulti=player_attackmulti
+            creature_ac=(4+player_level)
 
         # set creature c
         if enemy_selection=='c':
@@ -136,6 +143,8 @@ while 1>0:
             enemy_size=creaturec_size
             experience=creaturec_experience
             gold=creaturec_gold
+            creature_attackmulti=player_attackmulti
+            creature_ac=(4+player_level)
         
         # set special creature
         if enemy_selection=='special':
@@ -143,6 +152,8 @@ while 1>0:
             enemy_size='gigantic'
             experience=special_experience
             gold=special_gold
+            creature_attackmulti=player_attackmulti
+            creature_ac=(4+player_level)
 
 
         # enemy action function
@@ -173,11 +184,11 @@ while 1>0:
             # enemy attack
             if distance<3:
                 if distance==1:
-                    attack_chance=(random.randint(1,20))
+                    attack_chance=(random.randint(1,20)+creature_attackbonus)
                 else:
-                    attack_chance=(random.randint(1,6))
-                if attack_chance>4:
-                    enemy_attack=(random.randint(4,8))
+                    attack_chance=(random.randint(1,20))
+                if attack_chance>player_ac:
+                    enemy_attack=(random.randint(1,8)+creature_attackbonus)
                     player_health-=enemy_attack
                     if player_health<0:
                         player_health=0
@@ -208,9 +219,11 @@ while 1>0:
                 total_experience+=experience
                 
                 # level up
-                if total_experience>=(player_level*3000):
+                if total_experience>=(3000*player_level):
                     player_level+=1
-                    player_level_multi=(player_level/10+1)
+                    player_attackmulti=(player_level/10+1)
+                    player_attackbonus=(2+player_level)
+                    player_ac=(4+player_level)
                     sprint(f'You leveled up. You are now at level {player_level}.')
 
             distance=1
@@ -241,7 +254,7 @@ while 1>0:
             if player_action=="0":
                 sprint("""------------------------
 1 attack with sword
-2 attack with crossbow
+2 attack with bow
 3 cast a spell
 4 check inventory
 5 move
@@ -254,8 +267,9 @@ while 1>0:
             # player attack
             if player_action=="1":
                 if distance==1:
-                    if random.randint(1,20)>4:
-                        player_attack=(random.randint(4,8))
+                    attack_chance=(random.randint(1,20)+player_attackbonus)
+                    if attack_chance>creature_ac:
+                        player_attack=(random.randint(1,8)+player_attackbonus)
                         enemy_health-=player_attack
                         if enemy_health<0:
                             enemy_health=0
@@ -280,22 +294,22 @@ while 1>0:
                 continue
 
 
-            # attack with crossbow (2)
+            # attack with bow (2)
 
             # player attack
             if player_action=="2":
                 if total_arrows>0:
                     total_arrows-=1
                     if distance==1:
-                        attack_chance=(random.randint(1,5))
-                    else:
                         attack_chance=(random.randint(1,20))
-                    if attack_chance>4:
-                        player_attack=(random.randint(4,12))
+                    else:
+                        attack_chance=(random.randint(1,20)+player_attackbonus)
+                    if attack_chance>creature_ac:
+                        player_attack=(random.randint(1,12)+player_attackbonus)
                         enemy_health-=player_attack
                         if enemy_health<0:
                             enemy_health=0
-                        sprint(f'You shot the creature with your crossbow doing {player_attack} damage. The creature is at {enemy_health} hp.')
+                        sprint(f'You shot the creature with your bow doing {player_attack} damage. The creature is at {enemy_health} hp.')
                         if enemy_health==0:
                             sprint('The creature died.')
                             reward()
@@ -326,6 +340,7 @@ mp                  {mana}
 ------------------------
 1 flame             10
 2 lightening bolt   30
+3 heal              20
 ------------------------""")
 
 
@@ -335,8 +350,9 @@ mp                  {mana}
                     if spell_cast=='1':
                         if mana>=10:
                             mana-=10
-                            if (random.randint(1,20))>4:
-                                player_attack=(random.randint(8,12))
+                            attack_chance=(random.randint(1,20)+player_attackbonus)
+                            if attack_chance>creature_ac
+                                player_attack=(random.randint(1,12)+player_attackbonus)
                                 enemy_health-=player_attack
                                 if enemy_health<0:
                                     enemy_health=0
@@ -369,8 +385,9 @@ mp                  {mana}
                     if spell_cast=='2':
                         if mana>=30:
                             mana-=30
-                            if (random.randint(1,20))>4:
-                                player_attack=(random.randint(8,12))
+                            attack_chance=(random.randint(1,20)+player_attackbonus)
+                            if attack_chance>creature_ac
+                                player_attack=(random.randint(1,12)+player_attackbonus)
                                 enemy_health-=player_attack
                                 if enemy_health<0:
                                     enemy_health=0
@@ -392,6 +409,19 @@ mp                  {mana}
                                     reward()
                                     break    
                                 continue
+                        else:
+                            sprint('You do not have enough mana.')
+                            continue
+
+
+                    # heal spell
+
+                    # player attack
+                    if spell_cast=='3':
+                        if mana>=20:
+                            mana-=20
+                            player_health+=10
+                            sprint(f'You cast heal. You recovered 10 hp. You are at {player_health} hp.')
                         else:
                             sprint('You do not have enough mana.')
                             continue
@@ -419,7 +449,7 @@ mp                  {mana}
                     # use health potion 
                     if  inventory_action=='1':
                         if total_health_potions>0:
-                            health_from_potion=(random.randint(4,8))
+                            health_from_potion=(random.randint(1,20))
                             player_health+=health_from_potion
                             total_health_potions-=1
                             sprint(f'You took a potion of health. You recovered {health_from_potion} hp. You are at {player_health} hp. You have {total_health_potions} potions left.')
