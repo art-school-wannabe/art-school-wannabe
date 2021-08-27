@@ -124,9 +124,6 @@ while 1>0:
             enemy_size=creaturea_size
             experience=creaturea_experience
             gold=creaturea_gold
-            creature_attackmulti=player_attackmulti
-            creature_attackbonus=player_level
-            creature_ac=(4+player_level)
 
         # set creature b
         if enemy_selection=='b':
@@ -134,8 +131,6 @@ while 1>0:
             enemy_size=creatureb_size
             experience=creatureb_experience
             gold=creatureb_gold
-            creature_attackmulti=player_attackmulti
-            creature_ac=(4+player_level)
 
         # set creature c
         if enemy_selection=='c':
@@ -143,8 +138,6 @@ while 1>0:
             enemy_size=creaturec_size
             experience=creaturec_experience
             gold=creaturec_gold
-            creature_attackmulti=player_attackmulti
-            creature_ac=(4+player_level)
         
         # set special creature
         if enemy_selection=='special':
@@ -152,13 +145,17 @@ while 1>0:
             enemy_size='gigantic'
             experience=special_experience
             gold=special_gold
+            
+
+        # enemy stat block
             creature_attackmulti=player_attackmulti
+            creature_attackbonus=player_level
             creature_ac=(4+player_level)
 
 
         # enemy action function
         def enemy_action():
-            global enemy_health, player_health, distance, duration
+            global enemy_health, creature_attackbonus, player_health, distance, duration
 
             # fire effect
             if duration>0:
