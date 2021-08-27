@@ -9,7 +9,7 @@ import time
 # player health
 player_health=48
 
-# player level
+# player stat block
 player_level=1
 player_attackmulti=(player_level/10+1)
 player_attackbonus=(2+player_level)
@@ -147,13 +147,13 @@ while 1>0:
             gold=special_gold
             
 
-        # enemy stat block
-            creature_attackmulti=player_attackmulti
-            creature_attackbonus=player_level
-            creature_ac=(4+player_level)
+        # creature stat block
+        creature_attackmulti=player_attackmulti
+        creature_attackbonus=player_level
+        creature_ac=(4+player_level)
 
 
-        # enemy action function
+        # creature action function
         def enemy_action():
             global enemy_health, creature_attackbonus, player_health, distance, duration
 
@@ -178,7 +178,7 @@ while 1>0:
                         sprint('The creature slowly retreats from you.')
                         distance+=1
                     
-            # enemy attack
+            # creature attack
             if distance<3:
                 if distance==1:
                     attack_chance=(random.randint(1,20)+creature_attackbonus)
@@ -298,7 +298,8 @@ while 1>0:
                 if total_arrows>0:
                     total_arrows-=1
                     if distance==1:
-                        attack_chance=(random.randint(1,20))
+                        attack_chance=(random.randint(1,20)-(6+player_attackbonus))
+                        
                     else:
                         attack_chance=(random.randint(1,20)+player_attackbonus)
                     if attack_chance>creature_ac:
