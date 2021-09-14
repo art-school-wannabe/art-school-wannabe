@@ -28,5 +28,7 @@ elif weight < 0.25:
     
 # fufilled order
 else:
-    total = round((weight*ppp),2)
+    subtotal = (weight*ppp)
+    tax = (subtotal*0.07)
+    total = (subtotal+tax)
     print(f"{weight} lbs of cheese costs ${total}.")
